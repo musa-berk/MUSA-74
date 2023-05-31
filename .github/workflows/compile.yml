@@ -11,14 +11,14 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: |
-            main.tex
+            notes.tex
             syllabus.tex
           args: -pdf
           pre_compile: "apk add asymptote --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/"
       - name: Move to Public
         run: |
           mkdir public
-          mv main.pdf public
+          mv notes.pdf public
           mv syllabus.pdf public
       - name: Publish to GitHub pages
         if: success() && github.ref == 'refs/heads/main'
