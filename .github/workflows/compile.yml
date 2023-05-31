@@ -1,0 +1,30 @@
+name: Build LaTeX document
+on: [push]
+jobs:
+  build_latex:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX documents
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: |
+            main.tex
+            syllabus.tex
+          args: -pdf
+          pre_compile: "apk add asymptote --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/"
+      - name: Move to Public
+        run: |
+          mkdir public
+          mv main.pdf public
+          mv syllabus.pdf public
+      - name: Publish to GitHub pages
+        if: success() && github.ref == 'refs/heads/main'
+        uses: crazy-max/ghaction-github-pages@v1
+        with:
+          target_branch: gh-pages
+          build_dir: public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

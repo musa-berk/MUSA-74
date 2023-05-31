@@ -1,0 +1,303 @@
+\documentclass[11pt, a4paper]{article}
+%\usepackage{geometry}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\pagestyle{empty}
+\usepackage{graphicx}
+\usepackage{amssymb, fancyhdr, lastpage, bbding, pmboxdraw}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{darkblue}{rgb}{0,0,.6}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.6,0}
+\definecolor{red}{rgb}{.98,0,0}
+\usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=darkblue,citecolor=darkblue,linkcolor=darkred,bookmarksnumbered,plainpages=false]{hyperref}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{ \fancyplain{}{MUSA 74} }
+%\chead{ \fancyplain{}{} }
+\rhead{ \fancyplain{}{\today} }
+%\rfoot{\fancyplain{}{page \thepage\ of \pageref{LastPage}}}
+\fancyfoot[RO, LE] {page \thepage\ of \pageref{LastPage} }
+\thispagestyle{plain}
+
+%%%%%%%%%%%% LISTING %%%
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage{verbatim} % used to display code
+\usepackage{fancyvrb}
+\usepackage{acronym}
+\usepackage{amsthm}
+\usepackage{todonotes}
+\VerbatimFootnotes % Required, otherwise verbatim does not work in footnotes!
+
+
+
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.93}
+
+
+
+\lstset{
+%language=bash,                          % Code langugage
+basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
+keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
+commentstyle=\color{gray},              % Comments font
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
+backgroundcolor=\color{lightlightgray}, % Choose background color
+frame=none,                             % A frame around the code
+tabsize=2,                              % Default tab size
+captionpos=t,                           % Caption-position = bottom
+breaklines=true,                        % Automatic line breaking?
+breakatwhitespace=false,                % Automatic breaks only at whitespace?
+showspaces=false,                       % Dont make spaces visible
+showtabs=false,                         % Dont make tabls visible
+columns=flexible,                       % Column format
+morekeywords={__global__, __device__},  % CUDA specific keywords
+}
+
+\newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+{\Large \textsc{MUSA 74: Transition to Upper Division Mathematics}}
+\\ University of California, Berkeley Fall 2023 
+\end{center}
+\begin{center}
+\rule{7in}{0.4pt}
+\begin{minipage}[t]{.88\textwidth}
+\begin{center}
+    \begin{tabular}{ccc}
+ & \textbf{Instructors:} Nir Elber, Wen Cao, Benjamin Eisley, Alex Olhava, Lakshay Patel &\\
+ & 4PM--5PM Monday, Wednesday, Friday in Evans 740
+ \end{tabular}
+\end{center}
+\end{minipage}
+\rule{7in}{0.4pt}
+\end{center}
+\vspace{.5cm}
+\setlength{\unitlength}{1in}
+\renewcommand{\arraystretch}{2}
+
+\section*{Fast Information}
+
+\noindent\textbf{Facilitators:}
+
+Nir Elber (\email{nire@berkeley.edu})
+
+Wen Cao (\email{wen\_cao\_wendy@berkeley.edu})
+
+Benjamin Eisley (\email{beisley2025@berkeley.edu})
+
+Alex Olhava (\email{alex.olhava@berkeley.edu})
+
+Lakshay Patel (\email{lakshay@berkeley.edu})
+\\
+
+\noindent\textbf{Faculty Sponsor:} Ryan Hass
+\\
+
+\noindent\textbf{Course Email:} Email \email{nire@berkeley.edu} with ``[MUSA~74]'' in the header
+\\
+
+\noindent\textbf{Class Discord:}
+\url{https://discord.gg/VHEKjTKaNh}
+
+\vskip.15in
+\noindent\textbf{Class Time/Location:} 4PM--5PM Monday, Wednesday, Friday in Evans 740.\\
+
+\noindent\textbf{Office Hours:} Office hours will be held after class and by appointment. Also, each instructor has MUSA Office Hours in Evans 938, which can be found at \url{https://musa.berkeley.edu/office.html}.
+\\ \\
+\textbf{Online Availability:} In addition to in-person office hours, we will be available to answer questions on the class Discord server, and encourage you to post questions there to be answered by the instructors or your classmates. The server will be moderated by the instructors, and any administrative questions or concerns should be directed towards them. \\
+
+\noindent\textbf{MUSA 74 Corequisite:} We expect that most students will be enrolled in Math 53, 54, and/or 55 along with MUSA 74. If you aren't taking Math 53, 54, or 55, but still believe you will benefit from taking this class, we encourage you to enroll. If you are unsure whether or not you will benefit, please reach out to one of the instructors. \\
+
+\noindent\textbf{Important Dates:}
+\begin{center} \begin{minipage}{3.8in}
+\begin{flushleft}
+First Day of Class     \dotfill 23 August 2023  \\
+Last Day to Add/Drop     \dotfill 13 September 2023  \\
+Last Day of Class      \dotfill 8 December 2023  \\
+\end{flushleft}
+\end{minipage}
+\end{center}
+
+\section*{Slow Information}
+\noindent\textbf{Course Overview:} 
+% \vskip.15in 
+The transition from lower division to upper division mathematics courses can be quite daunting even to a very experienced student. Unlike other subjects, the difference between lower and upper division courses in mathematics can be quite overwhelming, the two main culprits being writing proofs and abstract concepts. In this course we will address these issues head-on. In particular, we will learn how to write proofs while developing good mathematical style. We will also give students more familiarity with the mathematical objects appearing in Math 104 and Math 113.
+
+MUSA 74 is a \textbf{2-unit class} which is intended for students who have no familiarity with writing proofs, and aren’t sure if they’re prepared enough for upper-division classes. In particular, we strongly recommend that the class is taken alongside Math 53, 54, or 55. We officially assume no prerequisites other than a little calculus (at the level of Math 1A), though we will also appeal to Math 53, 54, and 55 for a few examples. In order to ease the transition, we plan to focus on more of the abstract concepts found in calculus, linear algebra, and differential equations. We will delve into these concepts further by focusing on the proofs that arise when constructing these ideas. By the time you complete this course, you will be comfortable with writing proofs at the level required by the core upper-division sequence of Math 110, Math 113, Math 104, and Math 185.
+
+We want to encourage a welcoming and inclusive learning environment. Questions, curiosity, and collaboration are all highly encouraged, and dismissive attitudes are strongly discouraged. Math is a difficult subject, and confusion is not a sign of weakness. If students would like help outside of class, they are highly encouraged to ask the course facilitators to meet one-on-one. The course facilitators also hold office hours that can be found here, \url{https://musa.berkeley.edu/office.html}.
+\\
+
+\noindent \textbf{Student Learning Outcomes:} 
+
+\begin{enumerate}
+    \item Students will be able to read and write proofs at the level of a strong upper-division mathematics major.
+    \item Students will be comfortable utilizing the language of mathematics in various settings including asking questions and collaborating with peers in upper division mathematics courses.
+    \item Students will have the skills necessary to read and work through an undergraduate mathematical text.
+    \item Students will be familiar with naive set theory, field theory, advanced calculus, and other topics of their choice at a level appropriate for an upper-division mathematics major.
+    \item Students will be familiar with many important proof techniques, including but not limited to casework, contradiction, induction, and compactness.
+\end{enumerate}
+
+\vskip.15in
+
+\noindent\textbf{Discord and Course Material:} Course Announcements, course material, and all assignments can be found on our MUSA 74 Discord server or at or at \href{https://dfoiler.github.io/MUSA-74/main.pdf}{\texttt{https://dfoiler.github.io/MUSA-74/main.pdf}}.
+% Once you are enrolled in the course, you will be able to access the page.
+The MUSA 74 Course Notes can be found on the MUSA 74 Discord server as well. The course notes may be edited throughout the term and additional exercises may be added as well. You will be notified if any major changes do occur. The course will roughly follow the MUSA 74 Course Notes and your problem sets will be made up of the exercises found throughout the text.
+
+\vskip.15in
+
+% \noindent\textbf{Course Material:} We will be following the MUSA 74 Course Notes. The course notes can be found on our MUSA 74 Discord server or at \href{https://dfoiler.github.io/MUSA-74/main.pdf}{\texttt{https://dfoiler.github.io/MUSA-74/main.pdf}}.
+% and reading from \textit{The Art of Proof: Basic Training for Deeper Mathematics} by Matthias Beck. , while \textit{The Art of Proof} is free to UC Berkeley students and can be accessed through the UCB Library search.
+
+% \vskip.15in
+
+\noindent\textbf{Optional Texts:} \\
+The following is a list of various interesting and useful books that may be helpful throughout this course.
+Some of our homework will be taken from these texts (and provided with citation in the course notes).
+You can find most of these texts online or in the UC Berkeley Mathematics and Statistics Library. 
+\\ \\
+\noindent General Texts:
+% \noindent Calculus Texts:
+\begin{itemize}
+    \item Douglas Smith, Maurice Eggen, and Richard St. Andre, \textit{A Transition to Advanced Mathematics}
+\end{itemize}
+
+% \noindent Calculus Texts:
+% \begin{itemize}
+%     \item Tom Apostol, \textit{Calculus Volume 1: One Variable Calculus with an Introduction to Linear Algebra} (Continuous Functions Ch 3, Infinite Series Ch 10)
+%     \item Tom Apostol, \textit{Calculus Volume 2: Multi-Variable Calculus and Linear Algebra with Applications to Differential Equations and Probability} (Differential Calculus of Scalar and Vector Fields Ch 8)
+% \end{itemize}
+
+\noindent Discrete Mathematics Texts:
+\begin{itemize}
+    \item Kenneth Rosen, \textit{Discrete Mathematics and its Applications, 8th ed.}
+\end{itemize}
+
+\noindent Analysis Texts:
+\begin{itemize}
+    \item  Walter Rudin, \textit{Principles of Mathematical Analysis}
+    \item Kenneth Ross, \textit{Elementary Analysis}
+    \item Charles Pugh, \textit{Real Mathematical Analysis}
+    \item Tom Apostol, \textit{Mathematical Analysis}
+\end{itemize}
+
+\noindent Algebra Texts:
+\begin{itemize}
+    \item David Dummitt, Richard Foote, \textit{Abstract Algebra}
+    \item Michael Artin, \textit{Algebra}
+\end{itemize}
+
+%\\
+ %-----------------------------------Policies---------------------------------------
+\section*{Grading}
+\noindent\textbf{Grading Policy:} 
+\begin{center}
+Homework (50\%), Lecture Attendance (30\%), Unit Quizzes (20\%)  \\
+Grade: Passed \dotfill 70\% or above \\
+Grade: Not Passed  \dotfill Below 70\% 
+\end{center}
+A grade of incomplete will only be given when the student is unable to complete the required work due to exceptional circumstances (illness, accident, death
+in the family, etc.), and their work up until that point has been satisfactory (passing). 
+\\ \\
+\noindent\textbf{Lecture Information and Attendance Policy:}
+\\
+Lecture Attendance is worth 30\% of your grade! If you don't attend the lecture section or you are more than 10 minutes late (10 minutes after ``Berkeley time") then you will be marked as absent. You will be allowed two unexcused lecture absences for the Spring term that won't be factored into your overall Attendance Grade. In the case of emergency, an absence will only be excused if you provide documentation. 
+\\
+
+\noindent\textbf{Discussion Information and Attendance Policy:} \\
+Discussion sections will give you the opportunity to apply the concepts you’ve learned in a group setting. Attendance is not mandatory and the discussion recording will be made available to you, but it is strongly encouraged. At the end of each unit of the course (namely, during weeks 3, 6, 8, 11, and 14), there will be a short quiz at the end of discussion to check your understanding of the course content thus far.
+% You will be required to submit the discussion assignment on bcourses by 11:59pm on Sundays. We encourage you to attend Friday discussion sections since we will go over the assignment in great detail at that time. The assignment will be graded based on correctness and you will have the opportunity to work in groups. Bourses will allow you to choose your group each week and each group will only have to submit one assignment. We will provide multiple opportunities for everyone to find a group during the first few weeks of class. \textbf{You are not required to work in a group nor will you be required to stay in the same group for the entire semester.}
+\\
+
+\noindent\textbf{Homework Policy:} \\
+Problem sets will be released no later than Sunday at 11:59PM and will be due the following Sunday at 11:59PM on Gradescope. Each assignment should be uploaded as a PDF file or PNG/JPEG image; we strongly encourage students to type their homework using \LaTeX{}, although this is not required as long as all handwritten work is legible and formatted clearly. In addition to a handful of required problems each week (which will be graded on completion and accuracy), there will sometimes optional problems.
+
+If you believe that there is a grading error on one of your problem sets please contact us as soon as possible. You will have one weeks from the release of grades to request a regrade. Lastly, if you use other resources or you collaborate with another student to complete your problem set, please indicate so on your problem set. We encourage you to work with one another and seek out additional resources; however, we won’t tolerate plagiarism. For example, you are encouraged to discuss solutions, but the write-up should be individual. \\
+
+\noindent\textbf{Late Work:} \\
+Homeworks and quizzes will not dropped. Homework may be submitted up to a week late, for a score of up to 50\%. In the case of emergency, reach out to a facilitator, and we will work with you. \\
+
+\noindent\textbf{DSP Accommodations:} \\
+If you need any type of accommodations throughout the semester, please contact one of the instructors as soon as possible and be sure to provide a copy of your DSP Accommodation Letter. \\
+
+\noindent\textbf{Collegiality, respect, and sensitivity:} \\
+It is imperative that this class provides an atmosphere of collegiality, respect, and sensitivity, and provides an environment which is welcoming and supportive for all. All students are urged to review the Math Department's \href{https://math.berkeley.edu/about}{Statement on Collegiality and Respect}.
+
+The Math Department website contains several useful links. In addition, we highlight the following pages with resources:
+\begin{itemize}
+    \item The \href{https://technology.berkeley.edu/STEP}{Student Technology Equity Program} offers computers and internet access to students in need.
+    \item \href{https://uhs.berkeley.edu/caps}{Counseling and Psychological Services} at the Tang Center.
+    \item The \href{https://dsp.berkeley.edu/students/student-resources}{Berkeley Disabled Students' Program: Student Resources} has links to many useful resources.
+    \item The \href{https://care.berkeley.edu/}{PATH to Care Center} assists students who experience sexual harassment or sexual violence.
+    \item The \href{https://basicneeds.berkeley.edu/}{Basic Needs Center}.
+\end{itemize}
+
+%--------------------------------------Academic Honesty-------------------------------
+
+\section*{Academic Honesty}
+\noindent\textbf{Academic Honesty:} \\ 
+The Mathematics Department, and in particular, the instructors in this course, expect that students in mathematics courses will not engage in cheating or plagiarism. The following has been adapted from the Math Department web page to suit our course. \\
+
+\noindent\textbf{What does cheating mean?} \\
+Broadly speaking, cheating means violating the policies of a
+course or of the university in order to gain an unfair advantage over fellow students. A particular
+kind of cheating is plagiarism, which means taking credit for someone else’s work. Cheating and
+plagiarism hurts your fellow students in the short term, they hurt the cheater in the long term, and
+they will not be tolerated. Instructors can easily spot when problem sets look unusually similar, or have similar
+(wrong or correct) answers, calculations, ideas, or thought structure. If you write the correct answer to a computational problem without any justification or with a bogus justification leading to that answer, this raises strong suspicions that you cheated, on top of not
+receiving any credit anyways due to the lack of correct justification. We encourage MUSA 174 students to collaborate on problem sets and seek out additional help from tutors, online resources, and other texts. If you use other resources or you collaborate with another student to complete your problem set, please indicate so on your problem set. We encourage you to work with one another and seek out additional resources; however, we won't tolerate plagiarism. 
+\\ \\
+ \textbf{What to do in a case of cheating?}
+ \\
+ If you suspect that other students are cheating, you
+should immediately inform one of your instructors. Students may be cheating in ways that the instructors have never even heard of before(unlikely, but possible). Even if you don’t mention any names, the sooner you inform the instructor what is going on, the sooner they can take measures to put a stop to it. You can further report any cheating at:
+\url{http://sa.berkeley.edu/conduct/reporting/academic}.
+\\ \\
+\textbf{Resolution to Cheating:}
+\\ If you are suspected of cheating, the instructors may pursue a variety of actions depending on the particular nature of the incident. If you accept responsibility
+for academic misconduct, the matter can often be resolved between you and the instructors with
+possible academic sanctions ranging from losing points on a problem set to failing the class. The instructor may also
+send a report to the Mathematics Department and/or Center for Student Conduct. It is not
+necessary for the instructor to determine whether the student(s) has a passing knowledge of the
+relevant factual material. It is understood that any student who knowingly aids in cheating is as guilty as the cheating student.
+\newpage
+
+\section*{Course Outline}
+The schedule and homework shown here may be altered later in the course based on what is completed in class, and what you all are interested in and/or struggling with. The finalized problem sets will be posted each week to Gradescope. (If you are trying to get ahead, come talk to us in office hours, and we can let you know which exercises may be added/changed.) ``Notes" refer to the Course Notes. Starred exercises are optional.
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+     Week &  \qquad\qquad Topics Covered \qquad \qquad & Reading &Homework\\
+     \hline
+     1 & Propositional Logic & Notes 1.1 & 1.1\\
+     2 & Equivalences, Predicates, and Quantifiers & Notes 1.2 & 1.3b, 1.3d, 1.6, 1.7\\
+     3 & Introduction to Proofs & Notes 1.3 & 1.9ab, 1.10\\
+     4 & Sets and Set Operations & Notes 2.1 & 2.2cd, 2.3\\
+     5 & Functions and Relations & Notes 2.2 & 2.5ad, 2.6def, 2.9ad, 2.10$^*$\\
+     6 & Functions and Cardinality & Notes 2.3 & 2.14b, 2.16a, 2.17ac \\
+     7 & Mathematical Induction & Notes 3.1 & 3.2, 3.3, 3.4\\
+     8 & Strong Induction and Well Ordering & Notes 3.2 & 3.7, 3.9\\
+     9 & Metric Spaces & Notes 4.1 & 4.1, 4.5, 4.7, 4.8$^*$\\
+     10 & Closed Sets & Notes 4.2 & 4.11, 4.12, 4.13$^*$ \\
+     11 & Continuity & Notes 4.3 & 4.14ad, 4.16, 4.17, 4.18$^*$\\
+     12 & Groups & Notes 5.1 & 5.1, 5.3a, 5.6, 5.7$^*$\\
+     13 & Cosets & Notes 5.2 & 5.8, 5.10, 5.12\\
+     14 & Homomorphisms & Notes 5.3 & 5.16, 5.20, 5.21\\
+     \hline
+\end{tabular}
+\end{center}
+ 
+%%%%%% THE END 
+\end{document}
