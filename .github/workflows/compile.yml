@@ -20,7 +20,6 @@ jobs:
           mkdir public
           mv notes.pdf public
           mv syllabus.pdf public
-          mv favicon.ico public
       - name: Publish to GitHub pages
         if: success() && github.ref == 'refs/heads/main'
         uses: crazy-max/ghaction-github-pages@v1
