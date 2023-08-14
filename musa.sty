@@ -33,12 +33,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HOW TO USE
 % some notes on using this file:
 % - this file is constantly a work-in-progress; it changes frequently
-% - this style file is actually split into multiple!
-%   if you don't want to deal with the splitting, set the following to false
-\newif\ifnirfiles
-\nirfilesfalse
-%   otherwise, please also include sty/fitch.sty and sty/quiver.sy
-%   to make the includes work, import as `\inputfrom{your/directory}{nir}`
 % - this file is also split into headers that mostly commute
 %   feel free to delete and move them around as you see fit
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% /HOW TO USE
@@ -67,11 +61,6 @@
 \usepackage{xparse}
 \usepackage{xr}
 
-\ifnirfiles
-	\usepackage{sty/fitch}
-	\usepackage{sty/quiver}
-\fi
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SET-UP
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage{cabin}
@@ -91,32 +80,24 @@
 	\rhead{\textit{\rightmark}}
 	\cfoot{\thepage}
 }
-% \fancyhead[L]{}
-% \fancyhead[R]{\textit{\thechapter.~\rightmark}}
-% \fancyfoot[C]{\thepage}
 \pagestyle{contentpage}
 
 % link color stolen from wikipedia's dark blue
 \definecolor{wikipediadarkblue}{rgb}{0.023, 0.270, 0.676}
-\providecommand{\nirpdftitle}{notes}
 \hypersetup{
 	colorlinks,
 	citecolor=black,
 	filecolor=black,
 	linkcolor=wikipediadarkblue,
 	urlcolor=wikipediadarkblue,
-	pdftitle={\nirpdftitle},
-	pdfauthor={Nir Elber}
+	pdftitle={MUSA 74 Notes},
+	pdfauthor={MUSA 74 Course Staff}
 }
 \usepackage{hyperref}
 \usepackage{cleveref}
 
 % Labeling equations; I don't know where else to put this
-\ifx\thechapter\undefined
-	\numberwithin{equation}{section}
-\else
-	\numberwithin{equation}{chapter}
-\fi
+\numberwithin{equation}{subsection}
 \def\equationautorefname#1#2\null{%
 	(#2\null)%
 }
@@ -512,7 +493,6 @@
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \usepackage{thmtools,thm-restate}
 
-\usepackage[framemethod=TikZ]{mdframed}
 % Fixing mdframed skip below
 % See https://tex.stackexchange.com/a/292090/143086
 \usepackage[framemethod=TikZ]{mdframed}

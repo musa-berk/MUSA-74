@@ -1,0 +1,261 @@
+%Read the slack post (link below) regarding syntax and formatting before you start writing lecture notes.
+% Post: https://musa-2021.slack.com/archives/C01DGR645SL/p1609187728029500
+
+
+\documentclass[../notes.tex]{subfiles}
+\begin{document}
+
+\stepcounter{week}
+\section{Week \theweek: Continuous Functions}
+
+One of the most fundamental ideas you learned in calculus was that of a continuous function. Your instructor might have said "a funciton is continuous if you can draw it without picking your pencil up from the paper," or something like that. This week we'll give a rigorous definition for continuity, but before that we should look at limits of functions whose domain is $\RR$.
+
+\subsection{Limits of Functions}
+
+\begin{definition}
+    Let $f\colon \RR \to \RR$ be a real-valued function, $a\in \RR$, $L\in \RR$. Then $\lim_{x\to a}f(x)=L$ if and only if, for all $\varepsilon>0$, there exists $\delta>0$ such that $|f(x)-L| <\varepsilon$ when $ 0 < |x-a| < \delta$. 
+\end{definition}
+
+%TODO show limit is unique
+
+%TODO maybe change this? 
+\begin{remark}
+   Some important examples of real-valued functions are only defined on subsets of $\RR$, like $f(x)=\sqrt{x}$. Let $A\subset \RR$ and $f\colon A\to \RR$. Then the above definition still works for $\lim_{x\to a}f(x)$, except we only require $|f(x)-L|\leq \varepsilon$ for $\{x : 0 < |x-a| < \delta\}\cap A$. 
+\end{remark}
+
+Compare this definition to that of convergent sequences: '$n\geq N$' is replaced with '$0 < |x-a|\leq \delta$', and '$|x_n-x| < \varepsilon$' with '$|f(x)-L| < \varepsilon$'. We are purposefully excluding the case $|x-a|=0$ because the behavior of the function at $a$ should not change its limit:
+
+%TODO include picture
+\begin{example}
+\label{ex:rem-discont}
+    Let $f(x) =0$ for $x\neq 0$ and $f(0) =1$. From what you've learned in calculus, $\lim_{x\to 0}f(0)$ should equal $0$. Indeed, suppose $\varepsilon>0$. Then for any $\delta >0$, $0 < |x-0| < \delta$ implies $x\neq 0$, so $|f(x)-0| = |0-0| = 0< \varepsilon$, and therefore $\lim_{x\to 0}f(x) =0$. Suppose, however, our definition included the case $|x-a|=0$. Then $|f(0)-0|=1 > \frac{1}{2}$, so $\lim_{x\to 0}f(x) \neq 0$ for this alternative definition.
+\end{example}
+
+ \begin{example}
+     Let $a\in RR$, and $f$ be the constant function $f(x) = a$. We'll show that
+     \[ \lim_{x\to a}f(x) =a\]
+     Let $\varepsilon>0$. Then $|f(x)-a| =|a-a|=0$ for all $x\in \RR$. So for any choice of $\delta>0$, $|f(x)-a| = 0 <\varepsilon$ whenever $0< |x-a| <\delta$.
+ \end{example}
+
+Now for a more interesting example: 
+
+\begin{example}
+    Consider the linear function $f(x)  = 2x+1$. We'll show that
+    \[ \lim_{x\to 2}f(x) =5\]
+    First, let's simplify the distance between $f(x)$ and $5$:
+    \begin{flalign*}
+        |f(x)-5| &= |2x+1-5| \\
+        &= |2x-4| \\
+        &= 2|x-2|
+    \end{flalign*}
+    Let $\varepsilon>0$. Then for $\delta=\frac{\varepsilon}{2}$, $|f(x)-5| < \varepsilon$ whenever $|x-2|<\delta$.
+\end{example}
+
+We'll finish with a slightly tougher example. 
+
+\begin{example}
+    Let $f(x)=x^2$. We'll show that
+    \[ \lim_{x\to 1}f(x) = 1\]
+    Notice that
+    \begin{flalign*}
+       |f(x)=1| &= |x^2-1| \\
+       &= |x-1||x+1|
+    \end{flalign*}
+    Now let $\delta=\min\{\frac{\varepsilon}{2}, 1\}$. If $|x-1|<\delta$, then the triangle inequality implies $|x+1| <2 $ (you should check this). Thus
+    \begin{flalign*}
+        |f(x)-1| &= |x-1||x+1| \\
+        &\leq \delta |x+1| \\
+        &\leq \frac{\varepsilon}{2}(2) \\
+        &= \varepsilon
+    \end{flalign*}
+\end{example}
+
+%TODO is this necessary?
+Notice that we took $\delta=\min\{\frac{\varepsilon}{2}, 1\}$ since we wanted the benefits of both $\delta =\frac{\varepsilon}{2}$ and $\delta=1$. This was similar to how we chose $N=\max\{N_1,N_2\}$ to get the benefits of both $n\geq N_1$ and $n\geq N_2$.
+
+The ideas behind sequential convergence and limits of functions seem very similar, and in fact they have a special relation: 
+
+%TODO FINISH
+\begin{prop}
+\label{prop:seqs-and-limits}
+    If $f\colon\RR\to \RR$, the following statements are equivalent:
+    \begin{itemize}
+        \item[(1)]$\lim_{x\to a}f(x) = L$
+        \item[(2)] If $\{x_n\}$ is a convergent sequence such that $x_n\neq a$ for all $n$, then $\{f(x_n)\}$ converges to $L$. 
+    \end{itemize}
+\end{prop}
+%TODO explain what's happening here
+\begin{proof}
+    First we show (1) implies (2): Let $\varepsilon>0$. Since $\lim_{x\to a}f(x)=L$, there is $\delta>0$ such that $|f(x)-L| < \varepsilon$ whenever $|x-a|<\delta$. Since $x_n \to a$, there is $N$ such that $|x_n-a| < \delta$ whenever $n\geq N$. Thus $|f(x_n)-L| < \varepsilon$ whenever $n\geq N$, and therefore $\lim_{n\to \infty} f(x_n) = L$. Now we'll show that if (1) is false, (2) is false. If $\lim_{x\to a}f(x) \neq L$, then there is some $\varepsilon>0$ such that no $\delta > 0$ exists satisfying the definition of continuity. This means that for any $\delta > 0$, there is $z_\delta$ such that $0 < |z_\delta - a | < \delta$ but $|f(z_\delta) - L| > \varepsilon$. For each $n\in \NN$ let $x_n = z_{\frac{1}{n}}$. This gives us a sequence $\{x_n\}$ such that $0 < |x_n- a| < \frac{1}{n}$ and $|f(x_n) - L|  >\varepsilon$. The sequence $\{x_n\}$ converges to $a$ but $\{f(x_n)\}$ does not converge to $L$ (you should check both of these facts). 
+\end{proof}
+
+
+This means that we can use sequential convergence and limits interchangeably and apply results from last week to limits of functions: 
+
+%TODO finish proof
+\begin{proposition}
+\label{prop:lim-is-linear}
+    Suppose $f,g\colon \RR\to \RR$ are functions such that such that $\lim_{x\to a}f(x)$ and $\lim_{x\to a}g(x)$ exist.
+    \begin{listalph}
+       \item Let $h(x)=f(x)+g(x)$. Then \[\lim_{x\to a}h(x) = \lim_{x\to a}f(x)+\lim_{x\to a}g(x)\] 
+       \item Let $\lambda \in \RR$ and $h(x) = \lambda f(x)$. Then 
+       \[ \lim_{x\to a}h(x) = \lambda \lim_{x\to a}f(x)\]
+       \item Let $h(x)=f(x)g(x)$. Then 
+       \[ \lim_{x\to a}h(x) = \left(\lim_{x\to a}f(x)\right)\left(\lim_{x\to a}g(x)\right)\]
+    \end{listalph}
+\end{proposition}
+\begin{proof}
+    This is basically a corollary of \Cref{prop:conv-is-linear,prop:seqs-and-limits}: let $x_n$ be a sequence converging to $a$ such that $x_n\neq a$. Then, by \Cref{prop:seqs-and-limits}, $\lim_{n\to \infty}f(x_n) = \lim_{x\to a}f(x)$ and $\lim_{n\to \infty}g(x_n) = \lim_{x\to a}g(x)$. Thus, by \Cref{prop:conv-is-linear},
+    \begin{flalign*}
+        \lim_{n\to \infty} h(x_n) &= \lim_{n\to \infty} f(x_n) + \lim_{n\to \infty} g(x_n) \\
+        &= \lim_{x\to a}f(x) + \lim_{x\to a}g(x)
+    \end{flalign*}. Since this is true for all sequences, Proposition \ref{prop:seqs-and-limits} implies that
+    \[\lim_{x\to a}h(x) = \lim_{x\to a}f(x)+\lim_{x\to a}g(x)\] 
+    The proofs for part (b) and (c) are left as an exercise.
+\end{proof}
+
+\begin{exe}
+    Prove parts (b) and (c) of \Cref{prop:lim-is-linear}
+\end{exe}
+
+\subsection{Continuous Functions}
+
+%TODO include some transition 
+
+\begin{definition}
+    Let $f\colon\RR \to \RR$. $f$ is \dfn{continuous at $a\in \RR$} if $\lim_{x\to a}f(x) = f(a)$. $f$ is \dfn{continuous} if $f$ is continuous at $a$ for all $a\in \RR$. 
+\end{definition}
+
+\begin{example}
+    Fix $c\in \RR$ and consider the constant function $f(x)\equiv c$. We showed that $\lim_{x\to a}f(x)=c=f(a)$ for all $a\in \RR$, so $f$ is a continuous function. 
+\end{example}
+
+\begin{example}
+    Consider the function $f(x) = x$. If $x_n\to a$, then clearly $f(x_n)\to a$, so by \Cref{prop:seqs-and-limits} we have $\lim_{x\to a}f(x) = a = f(a)$, and therefore $f$ is continuous.
+\end{example}
+
+Because of \Cref{prop:lim-is-linear}, we immediately get the following facts: 
+
+\begin{proposition}
+    Let $f, g\colon\RR\to \RR$ be continuous functions (or continuous at $a\in \RR$) and $\lambda\in \RR$. Then $f+g, \lambda f, and f\cdot g$ are continuous (resp. continuous at $a\in \RR$). 
+\end{proposition}
+\begin{proof}
+    Let $h(x)=f(x)+g(x)$. For each $a\in \RR$, $\lim_{x\to a}f(x) =f(a)$ and $\lim_{x\to a}g(x)=a$. Thus $\lim_{x\to a}h(x) = \lim_{x\to a}f(x) + \lim_{x\to a}g(x) = f(a) + g(a) = h(a)$, which shows that $h$ is continuous at $a$ for all $a\in \RR$. The proof is the same for $h=\lambda f$ and $h=fg$. 
+\end{proof}
+
+\begin{example}
+    Let $m, b\in \RR$ and consider the affine-linear function $f(x)=mx+b$. We showed $g(x)=x$ is continuous, so $h(x)=mx$ is continuous by \Cref{prop:lim-is-linear}. We also showed the constant function $k(x) = b$ is continuous, so \Cref{prop:lim-is-linear} implies that $f(x) = h(x) +  k(x)$ is continuous
+\end{example}
+
+\begin{proposition}
+    Let $f,g\colon\RR\to \RR$ be continuous functions. Then the composition $f\circ g$ is a continuous function. 
+\end{proposition}
+\begin{proof}
+    Fix $x\in \RR$ and let $\varepsilon>0$. Since $f$ is continuous at $g(x)$, there is $\delta_1>0$ such that $|f(g(x)) - f(b)| < \varepsilon$ if $|g(x)-b| < \delta_1$. Since $g$ is continuous, there is $\delta_2>0$ such that $|g(x) - g(y)| < \delta_1$ whenever $|x-y| <\delta_2$. Thus $|f(g(x))-f(g(y))| < \varepsilon$ when $x < \delta_2$, so $f\circ g$ is continuous at $x$.   
+\end{proof}
+
+
+%\begin{example}
+%   $\sqrt{x}$ is continuous. 
+%\end{example}
+
+
+
+Let's look at some examples of functions that are not continuous. 
+
+\begin{definition}
+    If $f$ is not continuous at $x=a$, then $a$ is called a \dfn{discontinuity} point of $f$. 
+\end{definition}
+
+\begin{example} \label{ex:rem-discont-2}
+    Consider the function from \Cref{ex:rem-discont}
+    \[ f(x) = \begin{cases}
+        1 & x=0 \\
+        0 & x\neq 0
+    \end{cases}\]
+    We showed that $\lim_{x\to 0}f(x) =0$, so $f$ is not continuous at $a=0$. But, since $\lim_{x\to a}f(x)=0=f(a)$ for $a\neq 0$, $f$ is continuous at $a\neq 0$. 
+\end{example}
+
+\begin{definition}
+    If $\lim_{x\to a}f(x)$ exists but does not equal $f(a)$, we call $a$ a \dfn{removable discontinuity} of $f$. 
+\end{definition}
+
+In calculus you likely discussed limits "from the right/left", which allow us to isolate the behavior of the function to the left/right of a point. More precisely:
+
+\begin{definition}
+    Let $f\colon\RR\to \RR$, $a,L\in \RR$. Then $\lim_{x\to a^-}f(x)$ if and only if for all $\varepsilon>0$, there is $\delta$ such that $a-\delta < x < a$ implies $|f(x)-L| < \varepsilon$. Similarly, $\lim_{x\to a^+}f(x)$ if and only if for all $\varepsilon>0$, there is $\delta$ such that $a < x < a+\delta$ implies $|f(x)-L| < \varepsilon$.
+\end{definition}
+
+Basically, we are only requiring $f(x)$ to be close to $L$ for $x$ to the left (or right) of $a$. 
+
+\begin{exe}
+    Consider the function 
+    \[ f(x) = \begin{cases}
+        0 & x < 0 \\
+        1 & x \geq 0
+    \end{cases}\]
+    Show that $\lim_{x\to 0^-}f(x) = 0$, while $\lim_{x\to 0^+}f(x) = 1$. 
+\end{exe}
+
+\begin{definition}
+    If $\lim_{x\to a^-}f(x)$ and  $\lim_{x\to a^+}f(x)$ both exist but are different, we say $a$ is a \dfn{jump discontinuity} of $f$.
+\end{definition}
+
+We should really prove that jump discontinuities are indeed discontinuity points. This was likely presented to you as another defintion of continuity in calculus class: 
+
+\begin{proposition}
+    $\lim_{x\to a}f(x)=L$ if and only if $\lim_{x\to a^+}f(x)=lim_{x\to a^-}f(x)=L$.
+\end{proposition}
+
+\begin{proof}
+    First, suppose $\lim_{x\to a}f(x)=L$. Then, for any $\varepsilon>0$, choose $\delta>0$ such that $0 < |x-a| < \delta$ implies $|f(x)-L| < \varepsilon$. In particular, $a- \delta < x < a$ or $a < x < a + \delta$ implies $|f(x)-L| < \varepsilon$. Thus $\lim_{x\to a^-}f(x)=lim_{x\to a^-}f(x)=L$. Conversely, suppose $\lim_{x\to a^-}=\lim_{x\to a^-}$. For each $\varepsilon>0$, let $\delta^-, \delta^+>0$ such that $|f(x)-L| < \varepsilon$ when $a-\delta^- < x < a$ or $a < x < a+\delta^+$. Then $|f(x)-L| < \varepsilon$ when $0 < |x-a| < \delta=\max{\delta^+, \delta^-}$, so  $\lim_{x\to a}f(x)=L$. 
+\end{proof}
+
+\subsection{Problems}
+
+\begin{homework}
+    Let $m,b\in \RR$ and $f(x)=mx+b$. Prove that $\lim_{x\to a}f(x)=f(a)$ for all $a\in \RR$ \textbf{using only what we have covered prior to \Cref{prop:seqs-and-limits}}. 
+\end{homework}
+
+\begin{homework}
+     Show that \Cref{prop:seqs-and-limits} is true if we replace '$x_n\neq a$ for all $n\in \NN$' in (2) with  '$x_n\neq a$ for all but finitely many $n\in \NN$.' 
+ \end{homework}
+
+
+\begin{homework}
+    A \dfn{polynomial function} is a function of the form $p(x) = a_nx^n+\dots + a_1x+a_0$, where $a_i\in \RR$. Using \Cref{prop:lim-is-linear}, show that all polynomial functions are continuous. %challenge: show this directly using the definition of a limit
+\end{homework}
+
+\begin{homework}
+    Show that the function $\sqrt{x}: \RR_{\geq 0}\to \RR$ is continuous at all $x\in \RR_{\geq 0}$. 
+\end{homework}
+
+\begin{homework}
+    Let $f, g:\RR\to \RR$ be continuous functions. For $a\in \RR$, show that the function 
+    \[ h(x)=\begin{cases}
+        f(x) &x\leq a \\
+        g(x) &x\geq a
+    \end{cases}\]
+    is continuous if and only if $f(a)=g(a)$. 
+\end{homework}
+
+\begin{homework}
+    Let $f\colon\RR\to \RR$ and $t\in \RR$. Show that the translation $h_t(x)=f(t+x)$ is continuous if and only if $f$ is continuous. 
+\end{homework}
+
+\begin{homework}
+    Let $f_1, f_2, \dots, f_n \colon \RR\to \RR$ be a finite set of continuous functions. Show that 
+    \[ M(x) = \max\{f_1(x), \dots, f_n(x)\}\]
+    is continuous. 
+\end{homework}
+
+\begin{homework}
+    Let $f(x)=\frac{1}{x}$ for $x\neq 0$, and $f(0)=0$.
+    \begin{listalph}
+        \item Show that $f$ is continuous at $x$ if $x\neq 0$
+        \item Show that $f$ is not continuous at $0$, and that $f$ is \textit{not} a removable discontinuity. 
+    \end{listalph}
+\end{homework}
+
+
+\end{document}

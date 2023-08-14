@@ -1,0 +1,308 @@
+%Read the slack post (link below) regarding syntax and formatting before you start writing lecture notes.
+% Post: https://musa-2021.slack.com/archives/C01DGR645SL/p1609187728029500
+
+
+
+\documentclass[../notes.tex]{subfiles}
+\begin{document}
+
+\stepcounter{week}
+\section{Week \theweek: Cardinality and Finite Sets}
+Cardinality is one way mathematicians formalize the concept of the ``size'' of a set. If we are given two sets $X$ and $Y$, we might ask whether $X$ and $Y$ have the same size, or whether one is larger than the other. For finite sets, this is not complicated: we can compare the number of elements in $X$ and in $Y$. What do we do for infinite sets? Do $\NN$ and $\ZZ$ have the same size? How about $\QQ$ and $\RR$? In this section, we will be able to give formal answers to these questions using functions and cardinality.
+
+\subsection{Adjectives for Functions}
+Before jumping into cardinalities, it will benefit to us to understand functions a little better. Approximately speaking, we will use functions in order to understand the sets that they map between.
+\begin{definition}[injective, surjective, bijective]
+    Let $f\colon X \to Y$ be a function.
+    \begin{itemize}
+        \item We say $f$ is \dfn{injective} or \dfn{one-to-one} if and only if $f(x_1) = f(x_2)$ implies $x_1 = x_2$.
+        \item We say $f$ is \dfn{surjective} or \dfn{onto} $Y$ if and only if $f(X) = Y$. In other words, for each $y\in Y$, there exists $x\in X$ such that $f(x)=y$.
+        \item If $f$ is both injective and surjective, we say that $f$ is a \dfn{bijection} or \dfn{one-to-one correspondence}.
+    \end{itemize}
+\end{definition}
+Intuitively, injective functions are ``efficient" in that they don't send two points to the same point. Surjective functions are ``effective" in that they hit every point. As such, bijective functions are both ``efficient and effective."
+
+In some sense, a bijection $f\colon X\to Y$ tells us that $X$ and $Y$ are essentially the same. As such, we expect to be able to go backwards $Y\to X$ along $f$. Indeed, this is true.
+\begin{prop} \label{prop:bij-is-iso}
+    Let $f\colon X\to Y$ be a function. A function $f^{-1}\colon Y\to X$ is an \dfn{inverse} for $f$ if and only if $f^{-1}(f(x))=x$ for all $x\in X$ and $f\left(f^{-1}(y)\right)=y$ for all $y\in Y$. The function $f$ is bijective if and only if its has an inverse.
+\end{prop}
+\begin{proof}
+    This proof has two directions.
+    \begin{itemize}
+        \item Suppose $f$ is bijection. We need to show that $f$ has an inverse. To do this, we construct a function which looks like it could be an inverse, and then we prove that it actually is one.
+        
+        We begin by defining $f^{-1}$. Because $f$ is surjective, for every $y \in Y$, we can find a $x \in X$ such that $f(x) = y$; in fact, this $x$ is unique because if we found another $x'$ with $f(x')=y$, then $f(x)=y=f(x')$ implies $x=x'$ because $f$ is injective. Thus, we define $f^{-1}\colon Y\to X$ by sending $y\in Y$ to the unique $x\in X$ such that $f(x)=y$.
+        
+        We now check that $f^{-1}$ defines our inverse function. By construction, $f\left(f^{-1}(y)\right)=y$. Further, for any $x\in X$, we set $y\coloneqq f(x)$ and see that $f(x)=y$ implies
+        \[x=f^{-1}(y)=f^{-1}(f(x)),\]
+        finishing.
+        
+        \item Suppose $f$ has an inverse $f^{-1}\colon Y\to X$. We show that $f$ is bijective. To show that $f$ is injective, suppose $y\coloneqq f(x)=f(x')$ for some $x,x'\in X$. Then $f^{-1}(f(x))=x$ and $f^{-1}(f(x'))=x'$, so $x=f^{-1}(y)=x'$.
+
+        To show $f$ is surjective, for each $y\in Y$, we note that $x\coloneqq f^{-1}(y)$ has $f(x)=y$ by definition of $f^{-1}$.
+    \end{itemize}
+    The above implications complete the proof.
+\end{proof}
+\begin{exe}
+    Find sets $X$ and $Y$ and functions $f\colon X\to Y$ and $g\colon Y\to X$ such that $g(f(x))=x$ for all $x\in X$, but there exists $y\in Y$ such that $f(g(y))\ne y$. Is $f$ injective?
+\end{exe}
+\begin{remark}
+    Even though we defined a bijective function as being both injective and surjective, in practice is often easier to construct an inverse function instead. For the most part, this will be our strategy when exhibiting a bijection in the future.
+\end{remark}
+% On reason to care about the adjectives we have defined so far is that they can ``build'' up all functions, in the following sense.
+% \begin{prop} \label{prop:factor-functions} %[First isomorphism theorem of sets]
+%     %\index{first isomorphism theorem!set theory}
+%     Let $f\colon X\to Z$ be a function. There exists a set $Y$ and functions $\pi\colon X\to Y$ and $\iota\colon Y\to Z$ such that $\pi$ is surjective, $\iota$ is injective, and
+%     \[f=\iota\circ\pi.\]
+%     % There are sets $X_0\subseteq X$ and $Y_0\subseteq Y$ and functions $\pi\colon X \to X_0$, $\widetilde f\colon X_0 \to Y_0$, and $\iota\colon Y_0 \to Y$ such that $\pi$ is surjective, $\widetilde f$ is bijective, $\iota$ is injective, and
+%     % \[f = \iota \circ \widetilde f \circ \pi.\]
+% \end{prop}
+% % In the context of set theory, ``isomorphism" is just a synonym for bijection. (In other branches of math, such as linear algebra, an isomorphism is a special type of bijection!) There are other isomorphism theorems that prove that certain functions are bijections. We often express the conclusion of the first isomorphism theorem by saying that ``the diagram
+% % $$\begin{tikzcd}
+% %     X \arrow[r, "f"] \arrow[d, "\pi"] &Y\\
+% %     X_0 \arrow[r, "\tilde f"] &Y_0 \arrow[u, "\iota"]
+% % \end{tikzcd}$$
+% % commutes"; i.e. if you were to start with an $x \in X$ and apply the functions (``arrows") to $x$ in the order that they appear, you'd end up with the same result no matter whether you took the path $f$ or the path $\pi,\tilde f, \iota$.
+% % 
+% % For those of you who have taken computer science courses, this proof can be thought of as an algorithm to compute the set $X_0$ from $f$ and $X$. We start with $X$, and step by step construct $X_0$. (Of course, if $X$ is an infinite set, this might take an infinite amount of time, but if $X$ is finite and $f$ is ``not too complicated," then it's reasonable to think that you could design a computer program that carried out this process.) Most of the work goes into defining $X_0$; $\tilde f$ is easy to define, and the rest is just book-keeping.
+% % 
+% % This is a good strategy for writing proofs in general, and a theme we'll see again and again: to show that something exists, try giving a step-by-step process for computing it, and then prove that your process works at the end.
+% \begin{proof}
+%     As in \Cref{prop:bij-is-iso}, the strategy here will be to construct all of our objects first and then show that they satisfy the desired properties. To get some intuition of what is going on here, the idea is that $\pi$ is supposed to do all the squishing that $f$ does, and all that is left over is some injective part.
+
+%     More explicitly, define $Y\coloneqq f(X)$. Then for each $x\in X$, we see that $f(x)\in f(X)$, so we define $\pi\colon X\to Y$ by $\pi(x)\coloneqq f(x)$. Continuing, we note that $f(X)\subseteq Z$, so we define $\iota\colon Y\to Z$ by $\iota(y)\coloneqq y$. We now check that this works.
+%     \begin{itemize}
+%         \item We check that $\pi$ is surjective. Indeed, for any $y\in f(X)$, by definition of $f(X)$, there exists some $x\in X$ such that $f(x)=y$.
+%         \item We check that $\iota$ is injective. Indeed, given $y,y'\in f(X)$ such that $\iota(y)=\iota(y')$, we note that $\iota(y)=y$ and $\iota(y')=y'$, so $y=y'$ follows.
+%         \item We check that $f=\iota\circ\pi$. Well, for any $x\in X$, we see that
+%         \[\iota(\pi(x))=\iota(f(x))=f(x)\]
+%         where we have used the definitions of $\pi$ and $\iota$.
+%     \end{itemize}
+%     The above checks complete the proof.
+%     % Start with $X_0 = X$, and go through its elements one by one. If at any point we find a $x_1 \in X_0$ and a $x_2 \in X_0$ such that $x_2 \neq x_1$ and $f(x_1) = f(x_2)$, remove $x_2$ from $X_0$. We repeat this process until we have exhausted all elements of $X$. This defines $X_0$.
+%     %
+%     % Let $\tilde f$ denote the restriction of $f$ to $X_0$; that is, $\tilde f$ is the function $X_0 \to Y$ such that $\tilde f(x) = f(x)$ for all $x \in X_0$. If $\tilde f(x_1) = \tilde f(x_2)$, then $x_1 = x_2$ (or else $x_2$ was removed from $X_0$, so $\tilde f(x_2)$ is not defined), so $\tilde f$ is injective.
+%     %
+%     % We define $\pi: X \to X_0$ to be function which sends $x_1 \in X$ to the $x_2 \in X_0$ such that $f(x_1) = \tilde f(x_2)$. Since $\tilde f$ is injective, $\pi$ is actually a function. If $x \in X_0$, then $x \in X$ and $\pi(x) = x$. So $\pi$ is surjective.
+%     %
+%     % We now define $Y_0 = \tilde f(X_0)$. Then if we think of $\tilde f$ as a function $X_0 \to Y_0$, $\tilde f$ is surjective. Therefore $\tilde f$ is a bijection. Moreover, we let $\iota(y) = y$, so $\iota$ is defined on all of $Y_0$. If $\iota(y_1) = \iota(y_2)$ then $y_1 = y_2$ by definition of $\iota$, so $\iota$ is injective.
+%     %
+%     % Finally, notice that since $\iota$ is just the identity on $Y_0$,
+%     % $$\iota \circ \tilde f \circ \pi = \tilde f \circ \pi.$$
+%     % By definition of $\pi$, $\tilde f \circ \pi = f$. Therefore
+%     % $$f = \iota \circ \tilde f \circ \pi,$$
+%     % as promised.
+% \end{proof}
+% \begin{remark}
+%     At the cost of an extra function $\widetilde f$, we can control $Y$ a bit more. Namely, one can show the following: there are sets $X_0\subseteq X$ and $Z_0\subseteq Z$ and functions $\pi\colon X \to X_0$, $\widetilde f\colon X_0 \to Z_0$, and $\iota\colon Z_0 \to Z$ such that $\pi$ is surjective, $\widetilde f$ is bijective, $\iota$ is injective, and
+%     \[f = \iota \circ \widetilde f \circ \pi.\]
+%     The reader is encouraged to try to prove this, but it is nontrivial.
+% \end{remark}
+
+\subsection{Cardinalities}
+In an auditorium where each audience member is seated in exactly one seat, we can say confidently that the total number of seats is the number of audience members even if we do not know how many audience members or seats there are. In other words, by providing a bijection between audience members and seats, we know the number of each is the same.
+
+With this motivation, we are ready to define cardinality.
+\begin{definition}[cardinality]
+    Two sets $X$ and $Y$ have the same \dfn{cardinality} if and only if there is a function $f\colon X \to Y$ which is a bijection.
+\end{definition}
+\begin{example}
+    Let $X$ be the set of students in MUSA 74, and let $Y$ be the set of student IDs of the students in MUSA 74. Do $X$ and $Y$ have the same cardinality? Yes! There is a bijection $f\colon X \to Y$ which sends each student to their student ID. Each student in MUSA 74 has a unique student ID, so $f$ is a bijection, so by definition of \textit{cardinality}, $X$ and $Y$ have the same cardinality.
+    % Notice that we did not need to rely on the fact that $X$ and $Y$ are finite sets to prove that they have the same cardinality, and we did not need to count the number of students who are in MUSA 74 for the proof.
+\end{example}
+Cardinality has allowed to declare that two sets are the same size, but it is also interesting to compare sizes. For finite sets, we can again just count and compare the numbers, but for general sets we will want a more function-based approach as with cardinality.
+\begin{example}
+    Every Berkeley student has a unique student ID. Thus, there is an injective function from the set $S$ of all Berkeley students to the set $\ZZ$ of all integers, taking students to their IDs. This injective functions convinces us that there are at least as many integers as Berkeley students, even without knowing how many Berkeley students there are.
+\end{example}
+\begin{example} \label{ex:surj-compares-cards}
+    Let $\sim$ be an equivalence relation on a nonempty set $X$. Then the function $p\colon X\to X/{\sim}$ sending an element $x\in X$ to its equivalence class $[x]\in X/{\sim}$ is surjective. Thus, the surjection $p$ convinces us that the number of elements of $X$ is at least the number of equivalence classes.
+\end{example}
+The above two examples give us two ways to think about comparing cardinalities, and it will turn out that they are equivalent in favorable circumstances.
+\begin{definition}
+    Let $X$ and $Y$ be sets. Then we say that the cardinality of $X$ is less than or equal to the cardinality of $Y$ if and only if there is an injective function $i\colon X\to Y$.
+\end{definition}
+\begin{example}
+    There is an injective function $i\colon\ZZ\to\QQ$ given by $i(x)\coloneqq x$. Thus, the cardinality of $\ZZ$ is less than or equal to the cardinality of $\ZZ$.
+\end{example}
+We now explain \Cref{ex:surj-compares-cards}.
+\begin{prop} \label{prop:compare-cards}
+    Let $X$ and $Y$ be sets. Suppose $X$ is nonempty. Then the following are equivalent.
+    \begin{enumerate}[label=(\alph*)]
+        \item There is an injective function $i\colon X\to Y$.
+        \item There is a surjective function $p\colon Y\to X$.
+    \end{enumerate}
+    In other words, (a) implies (b), and (b) implies (a).
+\end{prop}
+\begin{proof}
+    We have two claims to show.
+    \begin{itemize}
+        \item We show that (a) implies (b). Because $X$ is nonempty, we may find some element $a\in X$. We now construct our surjective map $p\colon Y\to X$. Note that $y\in i(X)$ is equivalent to having some $x\in X$ such that $y=i(x)$; because $i$ is injective, this $x\in X$ is unique. Thus, we define
+        \[p(y)\coloneqq\begin{cases}
+            x & \text{if }i(x)=y, \\
+            a & \text{if no }x\in X\text{ has }i(x)=y.
+        \end{cases}\]
+        For each $x\in X$, we see $p(i(x))=x$, so $p$ is surjective.
+        \item We show that (b) implies (a). For each $x\in X$, we know that there is some $y\in Y$ such that $p(y)=x$. As such, for each $x\in X$, we define $i(x)$ to be some chosen $y\in Y$ such that $p(y)=x$. This defines a map $i\colon X\to Y$, and we see that
+        \[p(i(x))=x\]
+        for each $x\in X$ by construction. Thus, $i$ is injective: $i(x)=i(x')$ for $x,x'\in X$ implies $x=p(i(x))=p(i(x'))=x'$.
+        \qedhere
+    \end{itemize}
+\end{proof}
+\begin{remark}
+    One might expect that, if the cardinality of $X$ is less than or equal to the cardinality of $Y$, and the cardinality of $Y$ is less than or equal to the cardinality of $X$, then $X$ and $Y$ have the same cardinality. In other words, given injections $i\colon X\to Y$ and $j\colon Y\to X$, then there is a bijection $X\to Y$. This is in fact true, but it is quite nontrivial to prove. For the interested, this result is known as the Cantor--Schröder--Bernstein theorem.
+\end{remark}
+
+\subsection{Finite Sets}
+Cardinality was defined to work for arbitrary sets, but as an aside, we note that finite sets remain well-defined.
+\begin{definition}[finite]
+    A set $X$ is \dfn{finite} if and only if there is some $n\in\NN$ such that $X$ has the same cardinality as $\{1,2,\ldots,n\}$. In this case, we say that $X$ has $n$ elements and write $|X|=n$. If no such $n$ exists, we say that $X$ is \dfn{infinite}.
+\end{definition}
+This definition might feel a little weird because the intuitive way to think of a set as having, say, $2$ elements is not via some bijection. To explain this, saying that a set $X$ has $n$ elements intuitively means that we can enumerate the elements of $X$ as
+\[X=\{x_1,x_2,\ldots,x_n\}.\]
+However, given such an enumeration, we can then define a bijection $f\colon\{1,2,\ldots,n\}\to X$ by $f(k)\coloneqq x_k$. And conversely, given a bijection $f\colon\{1,2,\ldots,n\}\to X$, we can enumerate the elements of $X$ as
+\[X=\{f(1),f(2),\ldots,f(n)\},\]
+showing visually that $X$ has $n$ elements.
+
+% \begin{prop}
+%     Let $n \in \NN$, let $X$ be a set, and let $Z_n \coloneqq \{1, 2, \dots, n\}$. Then $X$ has exactly $n$ elements if and only if $Z_n$ and $X$ have the same cardinality.
+% \end{prop}
+% \begin{proof}
+%     In one direction, if $X$ has $n$ elements, then we can define a function $f\colon Z_n \to X$ as follows.
+%     \begin{enumerate}
+%         \item Choose an arbitrary element $x_1 \in X$ and let $f(1) = x_1$.
+%         \item Then choose an arbitrary element $x_2 \in X\setminus\{x_1\}$, and let $f(2) = x_2$.
+%         \item Then choose an arbitrary element $x_3 \in X\setminus\{x_1,x_2\}$ such that $x_3 \neq x_2$ and $x_3 \neq x_1$ and let $f(3) = x_3$.
+%         \item Repeat this for $x_1,\ldots,x_n$ process until we have defined $f(k)$ for every $k$.
+%     \end{enumerate}
+%     Because we chose a different element of $X$ for each $n$, we see $f$ is injective. Moreover, $f$ is surjective because there were only $n$ elements of $X$ to work with, and we used all of them. So $Z_n$ and $X$ have the same cardinality.
+    
+%     In the other direction, if $Z_n$ and $X$ have the same cardinality, there is a bijection $f\colon Z_n \to X$. Because $f$ is surjective, each elements of $X$ takes the form $f(k)$ for some $k\in Z_n$, so we may write
+%     \[X=\{f(1),f(2),\ldots,f(n)\}.\]
+%     Because $f$ is injective, each of these elements is distinct, so we indeed see that $X$ has exactly $n$ elements.
+% \end{proof}
+This idea gives a very useful proof technique known as \dfn{combinatorial proof}: to show that two natural numbers $n$ and $m$ are the same, just show that there is a bijection between a set with $n$ elements and an element with $m$ elements. Let's see an example of this.
+\begin{definition}
+    Let $X$ be a set and $k \in \NN$. By $X^{(k)}$, we mean the set of all subsets of $X$ of cardinality $k$. If $X$ has $n$ elements, we let $\binom nk$ denote the cardinality of $X^{(k)}$.
+\end{definition}
+\begin{remark}
+    It is not terribly difficult to show that if two sets $X$ and $Y$ have the same cardinality, then $X^{(k)}$ and $Y^{(k)}$ have the same cardinality for any $k\in\NN$. We outline the proof. Let $f\colon X\to Y$ be a bijection with inverse function $g\colon Y\to X$. Then the functions $f^{(k)}\colon X^{(k)}\to Y^{(k)}$ and $g^{(k)}\colon Y^{(k)}\to X^{(k)}$ given by
+    \[f^{(k)}\colon A\mapsto f(A)\qquad\text{and}\qquad g^{(k)}\colon B\mapsto g(B)\]
+    are inverse functions and thus give a bijection $X^{(k)}\to Y^{(k)}$. The reader is encouraged to check as many of these details as they would like.
+\end{remark}
+% \begin{prop}
+%     Let $X$ and $Y$ be sets and $k\in\NN$. If $X$ and $Y$ have the same cardinality, then $X^{(k)}$ and $Y^{(k)}$ have the same cardinality.
+% \end{prop}
+% \begin{proof}
+%     Because $X$ and $Y$ have the same cardinality, there is a bijection $f\colon X\to Y$. To define our bijection $X^{(k)}\to Y^{(k)}$, we simply follow $f$: define $f^{(k)}\colon X^{(k)}\to Y^{(k)}$ by $f\colon A\mapsto f(A)$. Because $A$ has $k$ elements, and $f$ is injective, we see $f(A)$ has $k$ elements.
+%     \begin{exe}
+%         Find a bijection $f$ between the sets $X\coloneqq\{1,2,3,4\}$ and $Y\coloneqq\{5,6,7,8\}$. Write down the map $f^{(k)}\colon X^{(2)}\to Y^{(2)}$ explicitly.
+%     \end{exe}
+%     We would like to show that $f^{(k)}$ is a bijection, for which we find an inverse function, which is enough by \Cref{prop:bij-is-iso}. Well, by \Cref{prop:bij-is-iso}, there is an inverse function $g\colon Y\to X$ for $f$, and we define $g^{(k)}\colon Y^{(k)}\to X^{(k)}$ by $g^{(k)}\colon B\mapsto g(B)$. Note $g(B)$ has $k$ elements when $B$ has $k$ elements because $g$ is injective.
+
+%     We now show that $f^{(k)}$ and $g^{(k)}$ is bijective.
+% \end{proof}
+\begin{example}
+    For any $n,k\in\NN$ with $n\ge k$, we have
+    \[\binom nk = \binom{n}{n-k}.\]
+\end{example}
+\begin{proof}
+    Let $X$ be a set of $n$ elements. We need to show that $X^{(k)}$ and $X^{(n-k)}$ have the same cardinality. If $A \subseteq X$ has $k$ elements then $X\setminus A$ has $n-k$ elements, so we define the map $f\colon X^{(k)}\to X^{(n-k)}$ by $f\colon A\mapsto(X\setminus A)$.
+    
+    We claim that $f$ is a bijection. By \Cref{prop:bij-is-iso}, it suffices to show that $f$ has an inverse function, so we define $g\colon X^{(n-k)}\to X^{(k)}$ by $g\colon B\mapsto(X\setminus B)$. Then for any $A\in X^{(k)}$ and $B\in X^{(n-k)}$, we can compute
+    \[g(f(A))=g(X\setminus A)=A\qquad\text{and}\qquad f(g(B))=f(X\setminus B)=B.\]
+    So $g$ is an inverse for $f$, so $f$ is a bijection, completing the proof.
+\end{proof}
+% \begin{definition}
+%     If $X$ has $n$ elements for some $n \in \NN$ then we say that $X$ is \dfn{finite}, and write $|X| = n$. Otherwise, we say that $X$ is \dfn{infinite}.
+% \end{definition}
+For finite sets, checking that a function can be simplified if we at least know our sets have the same size already.
+\begin{prop} \label{prop:finite-inj-surj-bij}
+    Suppose that $X$ and $Y$ are finite sets of the same cardinality, and let $f\colon X \to Y$ be a function. Then the following are equivalent.
+    \begin{enumerate}[label=(\alph*)]
+        \item $f$ is injective.
+        \item $f$ is surjective.
+        \item $f$ is bijective.
+    \end{enumerate}
+    In other words, if any one of (a), (b), or (c) is true, then all are true.
+\end{prop}
+\begin{proof}
+    To prove that multiple properties are equivalent, we show that (a) implies (b), that (b) implies (c), and that (c) implies (a). Then, for example, if (b) is true, we know (c) is implied, and then (a) is implied from (c). Anyway, this lets us break down our proof into three parts.
+    \begin{itemize}
+        \item We show (a) implies (b). Suppose that $f$ is injective. We need to show that $f$ is surjective, which means we want to show $f(X)=Y$. Note $f$ maps $X$ surjectively onto its image $f(X)$, so $X$ and $f(X)$ have the same cardinality.
+
+        However, $f(X)$ is a subset of $Y$, and because $f(X)$ and $Y$ are both finite sets with the same cardinality, we conclude that $f(X)=Y$. More explicitly, if $Y\setminus f(X)$ had any elements, then $Y$ would have strictly larger cardinality than $f(X)$, which we know to be false.\footnote{We are using \Cref{prop:dedekind-finite} here.}
+        
+        % Therefore if $X$ has $n$ elements, so does $f(X)$. But we know that $Y$ also has the same cardinality as the $X$, so $Y$ has $n$ elements. Therefore the complement $f(X)^c$ in $Y$, $f(X)^c = \{y \in Y: y \notin f(X)\}$, has $n - n$ elements, hence $f(X)^c = \emptyset$. Therefore $f(X) = Y$, so $f$ is surjective.
+        \item Suppose that $f$ is surjective. We need to show that $f$ is bijective. By \Cref{prop:bij-is-iso}, we just need to find an inverse of $f$. Strap in---this proof is going to be a little wild.
+        
+        We now define a candidate inverse function $g\colon Y \to X$. Using the recipe of (b) implies (a) in \Cref{prop:compare-cards}, we get the surjective function $f\colon X\to Y$ defines an injective function $g\colon X\to X$ such that
+        \begin{equation}
+            f(g(y))=y \label{eq:left-inverse-for-finite}
+        \end{equation}
+        for each $y\in Y$. Using the argument of the previous point, because $g$ is injective, we see that $g$ is actually bijective.
+
+        We now finish checking that $g$ is an inverse for $f$. Namely, given $x\in X$, we must check $g(f(x))=x$. Well, $g$ is surjective, so we know there is some $y\in Y$ such that $g(y)=x$. But then
+        \[f(x)=f(g(y))=y\]
+        by \autoref{eq:left-inverse-for-finite}, so we conclude $g(f(x))=x$ by definition of $y$. This completes the proof.
+        \item By definition, if $f$ is bijective, then $f$ is injective.
+    \end{itemize}
+    The above implications complete the proof.
+\end{proof}
+Here are a couple combinatorial proofs for you to try. Feel free to use \Cref{prop:finite-inj-surj-bij}.
+\begin{exercise} \label{exe:pset-is-2x}
+    Let $X$ be a set, and let $B(X)$ denote the set of functions $X \to \{0, 1\}$. Show that $\mc P(X)$ has the same cardinality as $B(X)$ by sending subsets $A\subseteq X$ to the function $1_A\colon X\to\{0,1\}$ defined by
+    \[1_A(x)\coloneqq\begin{cases}
+        1 & \text{if }x\in A, \\
+        0 & \text{if }x\notin A.
+    \end{cases}\]
+\end{exercise}
+\begin{exe}
+    Let $X$ be a finite set with $n$ elements. Use the previous exercise to show that $\mc P(X)$ has $2^n$ elements. Conclude that
+    \[\binom n0+\binom n1+\cdots+\binom n{n-1}+\binom nn=2^n.\]
+\end{exe}
+
+
+    
+\subsection{Problems}
+%You may use Corollary \ref{countable is one cardinality}, which we have not proven yet.
+
+\begin{homework} \label{prob:compose-injs-surjs}
+    Let $f\colon X \to Y$ and $g\colon Y \to Z$ be functions. Show the following.
+    \begin{enumerate}[label=(\alph*)]
+        \item If $f$ and $g$ are injective, then $g \circ f$ is injective.
+        \item If $f$ and $g$ are surjective, then $g \circ f$ is surjective.
+        \item If $f$ and $g$ are bijective, then $g \circ f$ is bijective.
+        \item If $g\circ f$ is injective, then $f$ is injective.
+        \item If $g\circ f$ is surjective, then $g$ is surjective.
+    \end{enumerate}
+\end{homework}
+
+\begin{homework} \label{isomorphism of sets}
+    Let $X$ be a set. Given subsets $A,B\subseteq X$, write $X \sim Y$ to mean that $A$ and $B$ have the same cardinality. Prove that $\sim$ is an equivalence relation on $\mc P(X)$. %Much later on, compare this to Exercise \ref{isomorphism of fields}.
+\end{homework}
+
+\begin{homework}[inclusion-exclusion principle]
+    Let $X$ and $Y$ be finite sets. Show that
+    \[|X \cup Y| = |X| + |Y| - |X \cap Y|.\]
+\end{homework}
+
+\begin{homework}[Cantor's paradox] \label{prob:pset-is-bigger}
+    Let $X$ be a set.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show there exists an injective function $f\colon X\to\mathcal P(X)$.
+        \item Show there does not exist an injective function $f\colon\mathcal P(X)\to X$.
+    \end{enumerate}
+\end{homework}
+
+\begin{homework}[Poincare recurrence]
+    Let $X$ be a set, and let $T\colon X \to X$ be a bijection. Further, for each positive integer $n$, let $T^{\circ n}\colon X \to X$ denote the $n$-fold application of $T$ as $T\circ T \circ \cdots \circ T$ (where $T$ is repeated $n$ times).
+    \begin{enumerate}[label=(\alph*)]
+        \item Suppose $X$ is finite. Show that for every $x \in X$ there is an $n > 0$ such that $T^{\circ n}(x) = x$.
+        \item Suppose $X$ is finite. Show that there are infinitely many $n > 0$ such that $T^{\circ n}(x) = x$.
+        \item Show that there exists a bijection $T\colon\ZZ\to\ZZ$ such that $T^{\circ n}(0)\ne0$ for each positive integer $n$.
+    \end{enumerate}
+    This phenomenon is known as ``Poincare recurrence.'' If you are very brave (and know the prerequisite physics), interpret Poincare recurrence as the following, highly paradoxical statement: ``If an ideal gas is allowed to travel between two chambers and starts in one chambers, eventually all the gas molecules will collect in one of the chambers."
+\end{homework}
+
+
+\end{document}

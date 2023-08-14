@@ -1,0 +1,171 @@
+%Read the slack post (link below) regarding syntax and formatting before you start writing lecture notes.
+% Post: https://musa-2021.slack.com/archives/C01DGR645SL/p1609187728029500
+
+
+\documentclass[../notes.tex]{subfiles}
+\begin{document}
+
+\stepcounter{week}
+\section{Week \theweek: \texorpdfstring{$\RR$}{The Reals}}
+
+In the last two weeks we've rigorously defined limits and continuity, but we've only managed to work with relatively simple functions. A study of more interesting functions (like $\log(x), e^x, $ and $sin(x)$) requires further ideas, all of which rest on a good understanding of real numbers. This week we'll discuss properties of $\RR$, although we will assume the existence of $\RR$ and that it satisfies property %TODO ref to supremum property 
+
+\subsection{Supremum and Infimum}
+
+Consider the sequence $x_n=\frac{1}{n} \to 0$. $\{x_n\}$ is \dfn{monotonically decreasing}, meaning $x_n \leq x_m$ if $n > m$. When does a monotonically decreasing sequence $\{x_n\}$ converge? Looking at a number line, it seems like it will happen as long as the sequence is bounded from below: 
+%TODO insert picture
+
+\begin{definition}
+    A set of real numbers $A$ is \dfn{bounded from below} (above) if there is a real number $r$ such that $r\leq a$ ($r\geq a$) for all $a\in A$. We call $r$ a \dfn{lower bound} (an \dfn{upper bound}) for $A$.
+\end{definition}
+
+\begin{example}
+    \begin{listalph}
+        \item The set $A=\NN$ is bounded from below, since $0$ is a lower bound. $A$ is not bounded from above, since for any $r\in \RR$ we can set $n = |\ceil{r}| + 1 > r$. 
+        \item The set $A=\ZZ$ is neither bounded from below nor bounded from above.
+        \item If $A$ is a finite set, $\max(A)$ is an upper bound, so $A$ bounded from above. $\min(A)$ is a lower bound, so $A$ is bounded from below. 
+    \end{listalph}
+\end{example}
+
+The same ideas suggest that a monotonically increasing sequence that is bounded from above will converge. To prove this, we could try setting $x=\max\{x_n : n\in \NN\}$ (the set of elements of the sequence). But, since $\{x_n : n\in \NN\}$ is infinite, it may not have a maximum element. 
+
+\begin{definition}
+    Let $A$ be a set that is bounded from below (above). A real number $s$ is the \dfn{supremum} (\dfn{infimum}) of $A$ if:
+    \begin{itemize}
+        \item $s$ is an upper (lower) bound of $A$
+        \item For every upper (lower) bound $r$ of $A$, $s\leq r$ ($s\geq r$). 
+    \end{itemize}
+    Because of these properties, $s$ is often called the least upper bound (greatest lower bound) of $A$. We write $r=\sup(A)$ ($r=\inf(A)$). 
+\end{definition}
+
+Since we wrote $\sup(A) and \inf(A)$, we should prove that 
+
+\begin{proposition}
+    If $A$ has a supremum (infimum), it is unique.
+\end{proposition}
+\begin{proof}
+    We'll prove this for supremum, the proof for infimum is nearly identical. Suppose $s, t$ are supremums of $A$. Since $t$ is an upper bound of $A$, $s\leq t$. Since $s$ is an upper bound of $A, t\leq s$. Therefore $t=s$. 
+\end{proof}
+
+\begin{exercise}
+\label{ex:sup-extend-max}
+    Let $F$ be a finite set of real numbers. Show that $\sup(F)=\max(F)$ and $\inf(F) = \min(F)$
+\end{exercise}
+
+We've shown that if the supremum of a set exists, it is unique, but how do we know such a supremum exists in the first place? If $A$ is not bounded from above, then clearly $\sup(A)$ does not exist. But, in fact, the converse is also true:
+
+\begin{proposition}
+\label{prop:sup-prop}
+    Let $A$ be a subset of real numbers bounded from above (below). Then $\sup(A)$ ($\inf(A)$) exists.
+\end{proposition}
+
+This is a key property of the real numbers, called the \dfn{supremum property}. We won't prove it in this class since that requires us to rigorously construct the real numbers. Although this property may seem intuitively true, it is not true for other ordered sets of numbers:
+
+\begin{example}
+    Consider the subset of rational numbers $A\subset \QQ$ given by $\{x : x^2 < 2\}$. Then $\sup(A)=\sqrt{2}\not\in \QQ$. So, even though $A$ is a subset of rational numbers that is bounded from above, it does not have a supremum in $\QQ$, and therefore $\QQ$ does not have the supremum property. 
+\end{example}
+
+It is in this sense that the real numbers "fill in the gaps"
+of the rational numbers. With \Cref{prop:sup-prop}, we can now prove the following theorem:
+
+\begin{theorem}
+    Every monotonic sequence of real numbers converges: If $\{x_n\}$ is monotonically increasing, then $\lim_{n\to \infty}x_n = \sup\{x_n : n\in \NN\}$. If $\{x_n\}$ is monotonically decreasing, then $\lim_{n\to \infty}x_n = \inf\{x_n : n\in \NN\}$.
+\end{theorem}
+\begin{proof}
+    We'll prove this for increasing sequences, as the other case is nearly identical. Set $x=\sup\{x_n : n\in \NN\}$, which is justified by the supremum property of $\RR$, and let $\epsilon>0$. Since $x_n\leq x$ for all $n\in \NN$, it suffices to show that there is $N$ such that $x_n > x-\epsilon$ whenever $n\geq N$. For the sake of contradiction, suppose that there is no $N$ such that $x_N > x-\epsilon$. Then $x-\epsilon \geq x_n$ for all $n$, so $x-\epsilon$ is an upper bound of $\{x_n : n\in \NN\}$. But then $x=\sup\{x_n : n\in \NN\} \leq x-\epsilon$, which is not possible since $\epsilon>0$. Thus, there must be some $N$ for which $x_N\geq x - \epsilon$. Since $\{x_n\}$ is non-decreasing, $x-\epsilon < x_N \leq x_n \leq x$ for all $n\geq N$, which proves that $\lim_{n\to \infty}x_n =x$. 
+\end{proof} 
+
+This theorem allows us to rigorously find the limit of certain sequences without using an $\epsilon$-type of argument: 
+
+\begin{example}
+    Let $x\in\RR$ such that $0<x<1$, and consider the sequence $\{x^n\}$. $\{x^n\}$ is a decreasing sequence that is bounded below by $0$, and therefore it converges to some $L\in \RR$. Notice that the sequence $\{x^{n+1}\}$ has the same limit, and equals $\{x(x^{n})\}$, so by \Cref{prop:conv-is-linear} we have:
+    \begin{flalign*}
+        L &= \lim_{n\to \infty}x^{n+1} \\
+        &= x\lim_{n\to \infty}x^{n} \\
+        &= xL
+    \end{flalign*}
+    Since $x\neq 1$, $L$ must be zero, and therefore $\lim_{n\to \infty}x^n=0$. 
+\end{example}
+
+\begin{example}
+    Let $x_1=2$ and $x_{n+1} = \frac{x_n}{2}+\frac{1}{x_n}$ for $n\geq 1$. This is actually the sequence generated by using Newton's method to approximate $\sqrt{2}$. Notice that $\sqrt{2} \leq x_1\leq 2$, and if $\sqrt{2}\leq x_n\leq 2$ then
+    \[ x_{n+1} = \frac{x_n}{2}  +\frac{1}{x_n} \leq 2 \]
+    and
+    \[ x_{n+1}^2 = \left(\frac{x_n}{2}\right)^2+1+\left(\frac{1}{x_n}\right)^2  > \frac{3}{2}+\frac{1}{x_n^2} > \sqrt{2}\]
+    Thus, by induction, $\sqrt{2}\leq x_n\leq 2$ for all $n$. Further, 
+    \[ 
+        x_{n}-x_{n+1} = \frac{x_n}{2} - \frac{1}{x_n} > \frac{\sqrt{2}}{2} - \frac{1}{2} > 0
+    \]
+    which means $\{x_n\}$ is decreasing. Therefore $\{x_n\}$ converges to some real number $L$. Notice that $\lim\{x_{n+1}\}=\lim\{x_n\}$, so by \Cref{prop:conv-is-linear} we have:
+    \begin{flalign*}
+        L &= \lim \{x_{n+1}\} \\
+        &= \lim\{\frac{x_n}{2}+\frac{1}{x_n}\} \\
+        &= \lim\{\frac{x_n}{2}\}+\lim\{\frac{1}{x_n}\} \\
+        &= \frac{L}{2} + \frac{1}{L} \\
+    \end{flalign*}
+    Multiplying by L, we have 
+    \[ L^2 = \frac{L^2}{2}+1\]
+    or, equivalently, 
+    \[ L^2=2\]
+    Since $x_n\geq \sqrt{2}$, and $L=\inf\{x_n :n\in \NN\}$ is a number satisfying the relation $L^2=2$, $L=\sqrt{2}$. 
+\end{example}
+
+\subsection{Bounded Function Theorem}
+%TODO introduce this 
+%In other words, a continuous function on a closed interval is bounded and achieves its minimum and maximum. 
+\begin{theorem}
+    Let $f\colon[a,b]\to \RR$ be continuous. Then there is $M,N>0$ such that 
+    \[ -N\leq f(x) \leq M\]
+    and $x_1, x_2\in [a,b]$ such that $f(x_1)=-N$ and $f(x_2)=M$.
+\end{theorem}
+
+\subsection{Problems}
+Most of these statements are true with "infimum" and "bounded below" replaced appropriately. 
+
+\begin{homework}
+    Let $A\subset B\subset \RR$.
+    \begin{listalph}
+        \item If $B$ is bounded from above, show that $\sup(A)\leq \sup(B)$.
+        \item If $A$ is bounded from below, show that $\inf(A) \geq \inf(B)$. 
+    \end{listalph}
+\end{homework}
+
+\begin{homework}
+    For $A,B\subset \RR$ let $A+B=\{a+b: a\in A, b\in B\}$. 
+    \begin{listalph}
+        \item If $A$, $B$ are bounded from above, show that $A+B$ is bounded from above. 
+        \item If $A,B$ consist of only positive numbers, show that \[ \sup(A+B)=\sup(A)+\sup(B)\]
+        \item Show that there are bounded subsets $A,B\subset \RR$ such that $\sup(A+B)\neq \sup(A)+\sup(B)$ 
+    \end{listalph}    
+\end{homework}
+
+\begin{homework} 
+    For $t\in \RR$ and $A\subset \RR$, let $A+t=\{a+t : a\in A\}$. Show that $A$ is bounded from above if and only if $A+t$ is bounded from above, and 
+    \[ \sup(A+t) = \sup(A)+t\]
+\end{homework}
+
+\begin{homework}
+For $x\in \RR$ and $A\subset \RR$, let $xA  = \{xa : a\in A\}$.
+\begin{listalph}
+     \item  Show that $A$ is bounded from above if and only if $xA$ is bounded from and $\sup(xA)=x\sup(A)$. \item Show that $A$ is bounded from above if and only if $xA$ is bounded from below and $\inf(xA)=x\sup(A)$.
+\end{listalph}
+\end{homework}
+
+\begin{homework}
+    Let $A\subset \RR$ be bounded from above. Show that there is a sequence of points in $A$ converging to $\sup(A)$. 
+\end{homework}
+
+\begin{homework}
+     Let $a > 1$ and consider the sequence $\{x_n\}_{n\geq 1}$, defined recursively as $x_{n+1} = x_n + \frac{a-x_n^2}{1+x_n}$ where $x_1 > \sqrt{a}$
+    \begin{enumerate}[label=\alph*.]
+        \item Prove that $x_1 > x_3 > x_5 > ...$
+        \item Prove that $x_2 < x_4 < x_6 < ...$
+        \item Prove that $\lim_{x \to \infty} x_n = \sqrt{a}$
+    \end{enumerate}
+\end{homework}
+
+
+
+
+
+\end{document}

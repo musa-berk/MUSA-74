@@ -2,10 +2,11 @@
 % Post: https://musa-2021.slack.com/archives/C01DGR645SL/p1609187728029500
 
 
-\documentclass[../main.tex]{subfiles}
+\documentclass[../notes.tex]{subfiles}
 \begin{document}
 
-\section{Week 7: Mathematical Induction}
+\stepcounter{week}
+\section{Week \theweek: Mathematical Induction}
 In science, ``inductive reasoning'' is the act of using empirical evidence about the world we live in to come to some sort of conclusion. For example, the following is a valid inductive argument.
 \begin{enumerate}
     \item The sun rose in the east every day of my life so far.
@@ -107,7 +108,7 @@ Induction can do more than prove equalities.
         \qedhere
     \end{enumerate}
 \end{proof}
-Here is a more conceptual inductive result, which we used in the proof of \Cref{prop:finite-inj-surj-bij}.
+Here is a more conceptual inductive result, which we will use in the proof of \Cref{prop:finite-inj-surj-bij}.
 \begin{prop} \label{prop:dedekind-finite}
     Let $X$ be a finite set with $n$ elements, where $n\in\NN$. If $A$ is a subset of $X$ with $n$ elements, then $A=X$.
 \end{prop}
@@ -121,6 +122,19 @@ Here is a more conceptual inductive result, which we used in the proof of \Cref{
         \qedhere
     \end{enumerate}
 \end{proof}
+% And here is another set-theoretic example.
+% \begin{prop}
+%     Let $X$ be a finite set with $n$ elements, where $n\in\NN$. Then $\mathcal P(X)$ has $2^n$ elements.
+% \end{prop}
+% \begin{proof}
+%     We are unable to be exWe proceed with induction on $n$.
+%     \begin{enumerate}
+%         \item Base case: when $n=0$, we see $X=\emp$, so $\mathcal P(X)=\{\emp\}$, so $\mathcal P(X)$ has $1=2^0$ elements.
+%         \item Inductive step: suppose the statement is true for all $n$-element sets $X$. We show that it is true for a given $(n+1)$-element set $X'$.
+
+%         Now, list out the elements of $X'$ by $\{x_1,\ldots,x_{n+1}\}$. Then define $X\coloneqq\{x_1,\ldots,x_n\}$ to be an $n$-element subset of $X'$. 
+%     \end{enumerate}
+% \end{proof}
 We close this section with a few more examples for you.
 \begin{exercise}
     Show that $2^{2n} - 1$ is divisible by 3 for each positive integer $n$.
@@ -173,7 +187,7 @@ The moral to this section is as follows.
     for each positive integer $n$.
 \end{homework}
 \begin{homework}
-    Using induction and \Cref{thm:de-morgan}, prove the following.
+    Using induction and \Cref{prop:de-morgan}, prove the following.
     \begin{theorem}[generalized de Morgan's laws] \label{thm:general-de-morgan}
         Let $n$ be a positive integer, and suppose $A_1, \dots, A_n$ are sets such that each $A_i$ is contained in a set $X$. Then
         \begin{enumerate}[label=(\alph*)]
