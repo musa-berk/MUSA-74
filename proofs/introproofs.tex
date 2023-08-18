@@ -8,7 +8,7 @@
 
 \stepcounter{week}
 \section{Week \theweek: Introduction to Proofs}
-In this section, we discuss proofs.
+In this section, we discuss proofs. Of course, we have already seen a few proofs previously in \cref{ch:set}, but we will now introduce proofs more formally on their own terms.
 
 \subsection{Proof Basics}
 The best way to learn what a proof is to see some examples. Here's an example from high-school algebra.
@@ -22,7 +22,7 @@ The best way to learn what a proof is to see some examples. Here's an example fr
     \[x^2 + bx + c = x - (r_1 + r_2)x + r_1r_2,\]
     so $r_1 + r_2 = -b$ and $r_1r_2 = c$.
 \end{proof}
-That proof should convince you beyond a shadow of a doubt that the claim is true, assuming that you know basic facts about quadratics: above all, a proof is an argument, meant to persuade the reader. If it didn't, think about it and figure out where you lost the line of reasoning, and ask around. Often a proof might not make sense when we read it ourselves, but it becomes clearer when someone else explains it.
+That proof should convince you beyond a shadow of a doubt that the claim is true, assuming that you know basic facts about quadratics: above all, a proof is an argument, meant to persuade the reader. If it didn't, think about it and figure out where you lost the line of reasoning, and ask around. Often a proof might not make sense when we read it ourselves, but it becomes clearer when someone else explains it. Here are a few more examples.
 \begin{example} \label{exe:squares-even}
     Let $n$ be an integer. If $n$ is even, then $n^2$ is even.
 \end{example}
@@ -35,30 +35,88 @@ That proof should convince you beyond a shadow of a doubt that the claim is true
     \end{align*}
     We have shown that $n^2$ is $2$ times the natural number $2k^2$, so $n^2$ is an even number by definition.
 \end{proof}
-Let's try a more complicated example, which you might've seen in calculus, and it is important in its own right.
-\begin{example}[Euler's formula]
-    For all real numbers $x$,
-    \[e^{ix} = \cos x + i \sin x.\]
+The following are examples using the language of set theory, which we introduced in \cref{ch:set}. In the interest of using knowledge we have definitely built, many of the problems at the end of this section will also use the language of set theory.
+\begin{example}
+    Let $A$ and $B$ and $C$ be sets. If $A\subseteq B$ and $B\subseteq C$, then $A\subseteq C$.
 \end{example}
 \begin{proof}
-    At first this might seem a bit hopeless, because it's not clear that $\exp$ and the trigonometric functions have anything to do with each other. The first clue to consider is that the derivative $\frac ddx\exp(x) = \exp(x)$, while $\frac d{dx}\sin(x) = \cos(x)$, and $\frac d{dx}\cos(x) = -\sin(x)$. So it's very easy to compute the higher derivatives of these functions, which means we can reason using Taylor series. This is as good a place to start as any, so we'll try this and see what happens.
-
-    Recall the Taylor series
-    \[e^x = \sum_{n=0}^\infty \frac{\exp^{(n)}(0)}{n!} x^n = \sum_{n=0}^\infty \frac{e^0}{n!} x^n = \sum_{n=0}^\infty \frac{x^n}{n!}.\]
-    Similarly,
-    \begin{align*}
-        \cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots \\
-        \sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} - \cdots.
-    \end{align*}
-    Plugging in $ix$ to $e^x$ and using that $i^2 = -1$, we have
-    \begin{align*}
-        e^{ix} &= 1 + ix + \frac{(ix)^2}{2!} + \frac{(ix)^3}{3!} + \frac{(ix)^4}{4!} + \dots \\
-        &= 1 + ix + \frac{-x^2}{2!} - i\frac{x^3}{3!} + \frac{x^4}{4!} + \dots\\
-        &= \left(1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots\right) + i\left(x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots\right)\\
-        &= \cos x + i\sin x,
-    \end{align*}
-    so $e^{ix} = \cos x + i\sin x$.
+    We want to show that $A\subseteq C$. In other words, for any $a\in A$, we want to show that $a\in C$. Well, we know that $A\subseteq B$, so $a\in A$ implies $a\in B$. Continuing, we know that $B\subseteq C$, so $a\in B$ implies $a\in C$, which is what we wanted.
 \end{proof}
+\begin{example}
+    Let $\preceq$ be a partial order on the set $X$. If $a\preceq b$ and $b\preceq c$ and $c\preceq a$, then $a=b$ and $b=c$.
+\end{example}
+\begin{proof}
+    We have two claims to show: we want to show that $a=b$ and $b=c$. We will show these separately.
+    \begin{itemize}
+        \item We show that $a=b$. We know that $b\preceq c$ and $c\preceq a$, so $b\preceq a$ follows because $\preceq$ is a partial order and hence transitive. But we already know that $a\preceq b$, so because $\preceq$ is antisymmetric, we see that $a=b$.
+        \item We show that $b=c$. We know that $c\preceq a$ and $a\preceq b$, so because $\preceq$ is transitive, $c\preceq b$. However, $b\preceq c$ already, so because $\preceq$ is antisymmetric, it follows $b=c$.
+        \qedhere
+    \end{itemize}
+\end{proof}
+\begin{example}
+    Let $X$ be a set, and let $\sim$ be an equivalence relation which is also a partial order. Then for any $x_1,x_2\in X$, we have $x_1\sim x_2$ if and only if $x_1=x_2$.
+\end{example}
+\begin{proof}
+    Here is an important piece of language: ``if and only if'' means that we will want to show both that $x_1\sim x_2$ implies that $x_1=x_2$ and that $x_1=x_2$ implies $x_1\sim x_2$. We show these implications separately.
+    \begin{itemize}
+        \item Suppose $x_1\sim x_2$. Because $\sim$ is an equivalence relation, it is symmetric, so $x_2\sim x_1$. However, $\sim$ is a partial order, so $x_1\sim x_2$ and $x_2\sim x_1$ implies that $x_1=x_2$.
+        \item Suppose $x_1=x_2$. Because $\sim$ is an equivalence relation, it is reflexive, so $x_1\sim x_2$.
+    \end{itemize}
+    The above implications complete the proof!
+\end{proof}
+Let's try a harder example. See if you can follow the logic! How might you have come up with the argument on your own?
+\begin{example} \label{ex:equiv-partition}
+    Let $\sim$ be an equivalence relation on $X$. For $x\in X$ recall that the equivalence class of $x$ is the subset
+    \[[x]\coloneqq\{x'\in X:x\sim x'\}.\]
+    For $x_1,x_2\in X$, we have $x_1\sim x_2$ if and only if $[x_1]=[x_2]$.
+\end{example}
+\begin{proof}
+    Recall from the previous example that ``if and only if'' means that we will want to show both that $x_1\sim x_2$ implies $[x_1]=[x_2]$ and that $[x_1]=[x_2]$ implies $x_1\sim x_2$. We show these implications separately.
+    \begin{itemize}
+        \item Suppose $x_1\sim x_2$. Then we want to show $[x_1]=[x_2]$. To show that $[x_1]=[x_2]$, we use \Cref{prop:subset-reflexive}: we show that $[x_1]\subseteq[x_2]$ and that $[x_2]\subseteq[x_1]$.
+
+        To see that $[x_1]\subseteq[x_2]$, choose any $y\in[x_1]$, and we want to show $y\in[x_2]$. Well, $y\in[x_1]$ means that $x_1\sim y$. However, $x_1\sim x_2$ already, so $x_2\sim x_1$ and $x_1\sim y$ implies that $x_2\sim y$. It follows $y\in[x_2]$.
+
+        Showing that $[x_2]\subseteq[x_1]$ is identical: for any $y\in[x_2]$, we know $x_2\sim y$, but $x_1\sim x_2$, so we see $x_1\sim y$, meaning $y\in[x_1]$. This completes the proof.
+
+        \item Suppose $[x_1]=[x_2]$. Then we note that $x_1\sim x_1$, so $x_1\in[x_1]$, from which it follows $x_1\in[x_2]$ by the equality of our sets. This then means that $x_1\sim x_2$.
+    \end{itemize}
+    The above implications completes the proof.
+\end{proof}
+% Let's try a harder example. It is the converse for \Cref{prop:function-to-equiv}. See if you can follow the logic! How might you have come up with the argument on your own?
+% \begin{example}
+%     Let $\sim$ be an equivalence relation on $X$. Then there is a set $Y$ and a function $f\colon X\to Y$ such that $x_1\sim x_2$ if and only if $f(x_1)=f(x_2)$.
+% \end{example}
+% \begin{proof}
+%     The difficulty in this argument lies in constructing the set $Y$. For a given $x\in X$, recall that $[x]$ denotes the equivalence class of $x$, which is
+%     \[[x]=\{x'\in X:x'\sim x\}.\]
+%     Note $[x]$ is a subset of $X$. The key point is the definition $Y\coloneqq\{[x]:x\in X\}$ and then the function $f\colon X\to Y$ by $f(x)\coloneqq[x]$. This function $f$ is in fact well-defined, though the concerned reader should check it.
+
+%     We now show that the function $f$ has $x_1\sim x_2$ if and only if $f(x_1)=f(x_2)$. However, this is simply \Cref{ex:equiv-partition}, so we are done.
+% \end{proof}
+% \begin{example}[Euler's formula]
+%     For all real numbers $x$,
+%     \[e^{ix} = \cos x + i \sin x.\]
+% \end{example}
+% \begin{proof}
+%     At first this might seem a bit hopeless, because it's not clear that $\exp$ and the trigonometric functions have anything to do with each other. The first clue to consider is that the derivative $\frac ddx\exp(x) = \exp(x)$, while $\frac d{dx}\sin(x) = \cos(x)$, and $\frac d{dx}\cos(x) = -\sin(x)$. So it's very easy to compute the higher derivatives of these functions, which means we can reason using Taylor series. This is as good a place to start as any, so we'll try this and see what happens.
+
+%     Recall the Taylor series
+%     \[e^x = \sum_{n=0}^\infty \frac{\exp^{(n)}(0)}{n!} x^n = \sum_{n=0}^\infty \frac{e^0}{n!} x^n = \sum_{n=0}^\infty \frac{x^n}{n!}.\]
+%     Similarly,
+%     \begin{align*}
+%         \cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots \\
+%         \sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} - \cdots.
+%     \end{align*}
+%     Plugging in $ix$ to $e^x$ and using that $i^2 = -1$, we have
+%     \begin{align*}
+%         e^{ix} &= 1 + ix + \frac{(ix)^2}{2!} + \frac{(ix)^3}{3!} + \frac{(ix)^4}{4!} + \dots \\
+%         &= 1 + ix + \frac{-x^2}{2!} - i\frac{x^3}{3!} + \frac{x^4}{4!} + \dots\\
+%         &= \left(1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots\right) + i\left(x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots\right)\\
+%         &= \cos x + i\sin x,
+%     \end{align*}
+%     so $e^{ix} = \cos x + i\sin x$.
+% \end{proof}
 % It can be helpful to break up a big proof into lots of smaller parts, called ``lemmas,'' and work on each one separately.
 Notice that in all of the above proofs, we needed to use every assumption we made. This will be the case on the homework. In other words, if you finished a proof and didn't use some assumption that the theorem made, then something went wrong. Explicitly, one of the following happened.
 \begin{itemize}
@@ -164,7 +222,19 @@ Now let's see an example that we'll come back to later: Russell's paradox. It's 
     \end{itemize}
     All cases have led to impossibility, so the barber does not exist.
 \end{proof}
-Here is another proof by contradiction.
+Here are some more proofs by contradiction.
+\begin{example}
+    Let $X$ be a nonempty set. There is no function $f\colon X\to\emp$.
+\end{example}
+\begin{proof}
+    Suppose for the sake of contradiction we have a function $f\colon X\to\emp$. We know that $X$ is nonempty, so we may find some $x\in X$. Because $f$ is a function, it follows $f(x)\in\emp$. However, this is a contradiction because $\emp$ has no elements!
+\end{proof}
+\begin{example}
+    Let $A$ and $B$ be sets. Then $(A\setminus B)\cap(A\cap B)=\emp$.
+\end{example}
+\begin{proof}
+    Suppose for the sake of contradiction that we have an element $a\in(A\setminus B)\cap(A\cap B)$. Then $a\in A\setminus B$, so it follows that $a\notin B$. On the other hand, $a\in A\cap B$, so it follows that $a\in B$. However, this is a contradiction! As such, $(A\setminus B)\cap(A\cap B)$ must have no elements.
+\end{proof}
 \begin{example} \label{exe:odd-square-to-odd}
     Let $n$ be an integer. If $n^2$ is odd, then $n$ is odd.
 \end{example}
@@ -173,7 +243,7 @@ Here is another proof by contradiction.
 \end{proof}
 A proof technique similar to contradiction is contraposition. To understand contraposition, recall that
 \[(p\to q)\equiv(\lnot q\to\lnot p)\]
-by \Cref{exe:contraposition}. As such, sometimes when we want to show a statement of the form $p\to q$, we can try to prove the contraposition $\lnot q\to\lnot p$ instead. Our first example is revamping the proof of \Cref{exe:odd-square-to-odd}.
+by \Cref{ex:contraposition}. As such, sometimes when we want to show a statement of the form $p\to q$, we can try to prove the contraposition $\lnot q\to\lnot p$ instead. Our first example is revamping the proof of \Cref{exe:odd-square-to-odd}.
 \begin{proof}[Another proof]
     The contraposition of ``if $n^2$ is odd, then $n$ is odd'' is the statement ``if $n$ is not odd, then $n^2$ is not odd.'' However, a positive integer is ``not odd'' if and only if it is even, so we're actually proving ``if $n$ is even, then $n^2$ is even,'' which is exactly \Cref{exe:squares-even}.
 \end{proof}
@@ -198,16 +268,35 @@ Sometimes we will want to prove that some object is unique. The usual way to do 
 \end{proof}
 Note that third case of the previous proof was identical to the first case with some letters changed. In the future, we might say ``without loss of generality, we have $x>x'$ or $x=x'$ because the case of $x'<x$ is similar.''
 
-Continuing with our examples, here is one from calculus.
+Continuing with our examples, here are a few from our language of set theory.
 \begin{example}
-    Say that a function $f$ from the real numbers to the real numbers is ``strictly convex'' if $f$ is twice-differentiable and $f''(t) > 0$ for all real numbers $t$. If $f$ is strictly convex, then there exists at most one real number $x$ such that $f(x)$ is the (global) minimum value of $f$.
+    Let $A$ and $B$ be sets with one element. Then there is a unique function $f\colon A\to B$.
 \end{example}
 \begin{proof}
-    Assume that $f$ achieves its minimum at $x$ and $x'$.
-    % Without loss of generality, we can assume that $x \leq x'$ because the case of $x'\ge x$ is similar.
-    % This means that we are making a harmless assumption: we do not know much about $x$ and $y$, but either $x \leq y$ or $x \leq y$. The proofs will be exactly the same in either case but with the variables swapped, so we might as well assume $x \leq y$.
-    By some calculus, we can compute the derivatives $f'(x) = 0$ and $f'(x') = 0$. On the other hand, since $f''(t) > 0$ for all $t$, we see $f'$ is strictly increasing, so $f'(x)=f'(x')$ implies $x=y$ by \Cref{exe:increasing-is-injective}.
+    Because $A$ and $B$ have one element, we may write $A=\{a\}$ and $B=\{b\}$ for some $a\in A$ and $b\in B$.
+
+    Now, before proving the uniqueness of the function $f$, we note that there certainly is a function $f\colon A\to B$. Indeed, simply define $f$ by $f(a)\coloneqq b$. It remains to show that this $f$ is unique.
+
+    Well, suppose that $g\colon A\to B$ is another function. Then we know that $g(a)\in B$, but $B$ has only element, so $g(a)=b$ follows. Thus, we see that $f(a)=g(a)$, and because $a$ is the only element of $A$, it follows that $f$ and $g$ are equal as functions. This completes the proof of uniqueness.
 \end{proof}
+\begin{example} \label{ex:unique-minimum-poset}
+    Let $\preceq$ be a partial order on the set $X$. There is at most one element $x_0\in X$ with the property that $x_0\preceq x$ for all $x\in X$.
+\end{example}
+\begin{proof}
+    Suppose we have two such elements $x_0$ and $x_0'$. By definition of $x_0$, we know that $x_0\preceq x_0'$. On the other hand, by definition of $x_0'$, we know that $x_0'\preceq x_0$. So because $\preceq$ is antisymmetric, the previous two sentences imply $x_0=x_0'$.
+\end{proof}
+\begin{remark}
+    An element of a partial order satisfying the conclusion of \Cref{ex:unique-minimum-poset} is called a ``minimum'' of the partially ordered set $X$. Do you see why?
+\end{remark}
+% \begin{example}
+%     Say that a function $f$ from the real numbers to the real numbers is ``strictly convex'' if $f$ is twice-differentiable and $f''(t) > 0$ for all real numbers $t$. If $f$ is strictly convex, then there exists at most one real number $x$ such that $f(x)$ is the (global) minimum value of $f$.
+% \end{example}
+% \begin{proof}
+%     Assume that $f$ achieves its minimum at $x$ and $x'$.
+%     % Without loss of generality, we can assume that $x \leq x'$ because the case of $x'\ge x$ is similar.
+%     % This means that we are making a harmless assumption: we do not know much about $x$ and $y$, but either $x \leq y$ or $x \leq y$. The proofs will be exactly the same in either case but with the variables swapped, so we might as well assume $x \leq y$.
+%     By some calculus, we can compute the derivatives $f'(x) = 0$ and $f'(x') = 0$. On the other hand, since $f''(t) > 0$ for all $t$, we see $f'$ is strictly increasing, so $f'(x)=f'(x')$ implies $x=y$ by \Cref{exe:increasing-is-injective}.
+% \end{proof}
 Our last example of this subsection will be relevant to us when we study group theory in \Cref{ch:grp}.
 \begin{example}
     There exists exactly one real number $z$ such that $z+a=a+z=a$ for all real numbers $a$. %The additive identity of a vector space is unique. %TODO Replace with not linear algebra
@@ -273,6 +362,44 @@ If you made it this far, then the discussion problems below should not be concep
 
 \begin{homework}
     Show that $\sqrt[3]{2}$ is irrational.
+\end{homework}
+
+\begin{homework}
+    Suppose $A, B, C$ are subsets of $X$. Write $A \operatorname{\triangle} B$ for the \dfn{symmetric difference} of $A$ and $B$ in $X$, which is
+    $$A \operatorname{\triangle} B = (A \setminus B) \cup (B \setminus A).$$
+    In the Venn diagram of $A$ and $B$, $A \operatorname{\triangle} B$ consists of the parts of the diagram that are in exactly one of $A$ and $B$, but not both.
+    
+    Provide explanations for the following.
+    \begin{enumerate}[label=(\alph*)]
+        \item $x \in X$ has $x \in A \operatorname{\triangle} B$ if and only if $x \in A$ or $x \in B$ but not both.
+        \item $(A \operatorname{\triangle} B) \operatorname{\triangle} {(B \operatorname{\triangle} C)} = A \operatorname{\triangle} C$. (Hint: break each step into cases and apply part 1)
+        %Removed part 3 because this problem is already very long, and the last part is not very interesting
+        %\item $A \cap (B \Delta C) = (A \cap B) \Delta (A \cap C)$.
+        \item $(A \operatorname{\triangle} B)\operatorname{\triangle}C=A\operatorname{\triangle}{}(B\operatorname{\triangle}C)$.
+        \item $A\cap(B\operatorname{\triangle}C)=(A\cap B)\operatorname{\triangle}{}(A\cap C)$.
+    \end{enumerate}
+\end{homework}
+
+\begin{homework}
+    Let $\sim$ be an equivelence relation on $X$, and let
+    \[X/{\sim}\coloneqq\{[x]:x\in X\}\]
+    denote the set of equivalence relations on $X$. Define the function $p\colon X\to(X/{\sim})$ by $p(x)\coloneqq[x]$. For any $x_1,x_2\in X$, prove that $x_1\sim x_2$ if and only if $p(x_1)=p(x_2)$.
+\end{homework}
+
+\begin{homework}
+    Let $\sim$ be an equivalence relation on $X$. For any $x_1,x_2\in X$, show that $[x_1]\cap[x_2]$ is nonempty if and only if $[x_1]=[x_2]$.
+\end{homework}
+
+\begin{homework}
+    Let $X$ be the set $\{1,2\}$.
+    \begin{listalph}
+        \item Write down four distinct functions $f_1,f_2,f_3,f_4\colon X\to X$.
+        \item Let $f\colon X\to X$ be any function. Prove that $f=f_i$ for one of the functions $f_i$ found in (a).
+    \end{listalph}
+\end{homework}
+
+\begin{homework}
+    Let $A$, $B$, and $C$ be sets. Show that $(A\cap C)\cap((A\cup B)\setminus C)=\emp$.
 \end{homework}
 
 % \begin{homework}
