@@ -14,7 +14,7 @@ jobs:
             notes.tex
             syllabus.tex
           args: -pdf
-          pre_compile: "apk add asymptote --repository=http://mirrors.ocf.berkeley.edu/alpine/edge/testing/x86_64/"
+          pre_compile: "apk add asymptote --repository=https://mirrors.ocf.berkeley.edu/alpine/edge/testing/"
       - name: Move to Public
         run: |
           mkdir public
