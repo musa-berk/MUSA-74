@@ -10,9 +10,7 @@ jobs:
       - name: Compile LaTeX documents
         uses: dante-ev/latex-action@latest
         with:
-          root_file: |
-            notes.tex
-            syllabus.tex
+          root_file: notes.tex
           extra_system_packages: asymptote
       - name: Move to Public
         run: |
