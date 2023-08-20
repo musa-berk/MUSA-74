@@ -8,13 +8,12 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       - name: Compile LaTeX documents
-        uses: xu-cheng/latex-action@v2
+        uses: dante-ev/latex-action@latest
         with:
           root_file: |
             notes.tex
             syllabus.tex
-          args: -pdf
-          pre_compile: "apk add asymptote --repository=https://web.archive.org/web/20230326150046/http://dl-cdn.alpinelinux.org/alpine/edge/testing/"
+          extra_system_packages: asymptote
       - name: Move to Public
         run: |
           mkdir public
