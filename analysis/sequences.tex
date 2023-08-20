@@ -14,11 +14,10 @@ In calculus, you likely learned that convergent sequences are those that "approa
 
 Sequences and their characteristics are the foundation of limits, continuity, differentiation, and integration. 
 
-\begin{definition}[Sequence]
+\begin{definition}[sequence]
 \label{def:sequence}
-    A \dfn{sequence} of real numbers is an ordered list of real numbers $\{x_n\}$ indexed by the natural numbers.
+    A \dfn{sequence} of real numbers is an ordered list of real numbers $\{x_n\}_{n\in\NN}$ indexed by the natural numbers. When confusion is unlikely to arise, we will abbreviate $\{x_n\}_{n\in\NN}$ to $\{x_n\}$.
 \end{definition}
-
 One can also think of a sequence as a function $f\colon \NN\to \RR$. Here are some examples:
 
 \begin{example} 
@@ -35,10 +34,9 @@ One can also think of a sequence as a function $f\colon \NN\to \RR$. Here are so
 \begin{warn}
     In this course we opt for denoting sequences using brackets, but this is actually a slight abuse of notation. The sequence $\{x_n\}$ is not the same as the set of its elements: The repeating sequence $\{0,1,0,1,\dots\}$ and the terminating sequence $\{1,0,0,0,\dots\}$ are different, but the set of elements in each sequences is the same: $\{0,1\}$.
 \end{warn}
-
 When we think of sequences "approaching" or "getting close to" a number, we are implicitly using a notion of distance. Before we discuss convergence of sequences, we clarify our notion of the distance between two real numbers: 
 
-\begin{definition}
+\begin{definition}[distance]
     Let $x,y$ be real numbers. The \dfn{distance} between $x$ and $y$ is $|x-y|$, the absolute value of their difference.
 \end{definition}
 
@@ -46,11 +44,11 @@ When we think of sequences "approaching" or "getting close to" a number, we are 
 
 \begin{proposition}
 \label{prop:real-metric}
-    Let $d(x,y)=|x-y|$. Then:
+    Let $d(x,y)\coloneqq|x-y|$. Then the following are true for any $x,y,z\in\RR$.
     \begin{listalph}
-        \item $d(x,y)=d(y,x)$
-        \item $d(x,y)\geq 0$, and $d(x,y)=0$ if and only if $x=y$.
-        \item $d(x,y) \leq d(x,z)+d(z,y)$ for all $x,y,z\in \RR$.
+        \item Symmetry: $d(x,y)=d(y,x)$
+        \item Nonnegative: $d(x,y)\geq 0$, and $d(x,y)=0$ if and only if $x=y$.
+        \item Triangle inequality: $d(x,y) \leq d(x,z)+d(z,y)$ for all $x,y,z\in \RR$.
     \end{listalph}
 \end{proposition}
 \begin{proof}
@@ -59,22 +57,19 @@ When we think of sequences "approaching" or "getting close to" a number, we are 
     Now, $|a|\ge a$ and $|b|\ge b$, so $|a|+|b|\ge a+b$. Additionally, $|a|\ge-a$ and $|b|\ge-b$, so $|a|+|b|\ge-a-b$. However, $|a+b|$ equals either $a+b$ or $-a-b$, so the inequality follows.
 \end{proof}
 
-In Math 104 you'll learn that these are the defining properties for the mathematical notion of a distance function. Part (c) of \Cref{prop:real-metric} is called the \dfn{triangle inequality}, and it happens to be extremely useful for proofs in analysis. 
+In Math 104 you'll learn that these are the defining properties for the mathematical notion of a distance function. Part (c) of \Cref{prop:real-metric} is called the \dfn{triangle inequality}, and it happens to be extremely useful for proofs in analysis. We are now in a position to rigorously define convergence: 
 
-We are now in a position to rigorously define convergence: 
-
-\begin{definition}
-    Let $\{x_n\}$ be a sequence of real numbers, and $x$ a real number. Then $\{x_n\}$ \dfn{converges} to $x$ if, for all real $\varepsilon>0$, there is $N\in\NN$ such that $|x-x_n|\leq \varepsilon$ for all $n\geq N$. We call $x$ the '\dfn{limit}' of $\{x_n\}$, and write $\lim_{n\to \infty} x_n =x$, or $\lim x_n =x$, or $x_n\to x$.  
+\begin{definition}[convergent sequence]
+    Let $\{x_n\}$ be a sequence of real numbers, and let $x$ a real number. Then $\{x_n\}$ \dfn{converges} to $x$ if, for all real $\varepsilon>0$, there is $N\in\NN$ such that $|x-x_n|\leq \varepsilon$ for all $n\geq N$. We call $x$ the \dfn{limit} of $\{x_n\}$, and write $\lim_{n\to \infty} x_n =x$, or $\lim x_n =x$, or $x_n\to x$.  
 \end{definition}
-
-There are a lot of quantifiers here, but intuitively we are saying that no matter how small $\varepsilon>0$ is, the terms $x_n$ will eventually be within distance $\varepsilon$ from $x$. We should justify the notation $x=\lim x_n$: by showing that the limit of a convergent sequence is unique.
+There are a lot of quantifiers here, but intuitively we are saying that no matter how small $\varepsilon>0$ is, the terms $x_n$ will eventually be within distance $\varepsilon$ from $x$. We should justify the notation $x=\lim x_n$ by showing that the limit of a convergent sequence is unique.
 
 %TODO maybe put this later in the week? Include a picture
-\begin{proposition}
+\begin{proposition} \label{prop:seq-limit-uniq}
     Suppose $x$ and $y$ are both limits of the sequence $\{x_n\}$. Then $x=y$. 
 \end{proposition}
 \begin{proof}
-    For the sake of contradiction, suppose $x\neq y$. Then the distance between $x$ and $y$ is positive.Let $\varepsilon=\frac{|x-y|}{2}>0$. Because $\lim_{n\to \infty}x_n = x$, there is some $N$ such that $|x-x_n| < \varepsilon$ for $n\geq N$. 
+    For the sake of contradiction, suppose $x\neq y$. Then the distance between $x$ and $y$ is positive. Let $\varepsilon=\frac{|x-y|}{2}>0$. Because $\lim_{n\to \infty}x_n = x$, there is some $N$ such that $|x-x_n| < \varepsilon$ for $n\geq N$. 
     The triangle inequality tells us
     \[ |x-y| < |x-x_n|+|x_n-y| \]
     Which tells us that the distance between $x_n$ and $y$ is at most
@@ -87,88 +82,99 @@ There are a lot of quantifiers here, but intuitively we are saying that no matte
     These contradict each other when $n\geq \max\{N, M\}$, so $x=y$.  
 \end{proof}
 
-Lets look at some of the sequences in \Cref{ex-sequences}.
+Let's look at some of the sequences in \Cref{ex-sequences}.
 
 \begin{example}
-    Let $x_n=\frac{1}{n}$ for $n\in\NN$. We'll show that $\lim x_n = 0$. Let $\varepsilon>0$. Then $|a-x_n|=|a-a|=0 <\varepsilon$ for all $n\geq 1$. Thus, for any choice of $\varepsilon>0$, \Cref{def:sequence} is satisfied with $N=1$. 
+    Let $a$ be real number and $x_n\coloneqq a$ for $n\in\NN$. We'll show that $\lim x_n = a$.
 \end{example}
-
+\begin{proof}
+    Let $\varepsilon>0$. Then $|a-x_n|=|a-a|=0 <\varepsilon$ for all $n\geq 1$. Thus, for any choice of $\varepsilon>0$, \Cref{def:sequence} is satisfied with $N=1$. 
+\end{proof}
 Let's look at a more interesting example. 
 
 \begin{example}
-    We'll show that the sequence $x_n=\frac{1}{n}$ converges to $0$. Let $\varepsilon>0$, so that we hope to find $N$ such that $|\frac{1}{n}-0|=\frac{1}{n}<\varepsilon$ when $n\geq N$. Notice that $\frac{1}{n}\leq \frac{1}{N}$ when $n\geq N$, so it suffices to find $N$ such that $\frac{1}{N}<\varepsilon$. Dividing both sides by $\frac{\varepsilon}{N}$, this is equivalent to $N > \frac{1}{\varepsilon}$. Choosing $N=\lceil \frac{1}{\varepsilon}\rceil$ (the smallest integer greater than $\frac{1}{\varepsilon}$) suffices.
+    We'll show that the sequence $x_n\coloneqq\frac{1}{n}$ converges to $0$.
 \end{example}
-
-Let's also look at an example of sequence that does not converge:
+\begin{proof}
+    Let $\varepsilon>0$, so that we hope to find $N$ such that $|\frac{1}{n}-0|=\frac{1}{n}<\varepsilon$ when $n\geq N$. Notice that $\frac{1}{n}\leq \frac{1}{N}$ when $n\geq N$, so it suffices to find $N$ such that $\frac{1}{N}<\varepsilon$. Dividing both sides by $\frac{\varepsilon}{N}$, this is equivalent to $N > \frac{1}{\varepsilon}$. Choosing $N=\lceil \frac{1}{\varepsilon}\rceil$ (the smallest integer greater than $\frac{1}{\varepsilon}$) suffices.
+\end{proof}
+As you might expect, not all sequences converge.
 
 \begin{example}
-    Let $x_n=(-1)^n$. To prove that $\{x_n\}$ does not converge, we assume for the sake of contradiction that $\lim x_n=x$ for some real number $x$. It suffices to find a particular $\varepsilon>0$ such that the condition for \Cref{def:sequence} is not met. 
-    %TODO include picture
-    Let $\varepsilon=\frac{1}{2}$. Intuitively, if $x$ is within distance $\frac{1}{2}$ of $-1$, it cannot be within distance $\frac{1}{2}$ of $1$ (and vice-versa). Indeed, using the triangle inequality (part (c) of \Cref{prop:real-metric}):
-    \begin{equation*}\label{eq:divseq1}
-        2=|1-(-1)| \leq |x-1|+|x-(-1)| 
-    \end{equation*}
-    By assumption there is some $N$ such that $|x-x_n|\leq \frac{1}{2}$ for  $n\geq N$. In particular $|x-x_{2N}| = |x-1|\leq \frac{1}{2}$ and $|x-x_{2N+1}|=|x+1|\leq \frac{1}{2}$. But then, using \eqref{eq:divseq1}, we find that $2\leq \frac{1}{2}+\frac{1}{2}$, which is absurd. 
+    Let $x_n\coloneqq(-1)^n$. We show that $\{x_n\}$ does not converge.
 \end{example}
-
+\begin{proof}
+    Assume for the sake of contradiction that $\lim x_n=x$ for some real number $x$. It suffices to find a particular $\varepsilon>0$ such that the condition for \Cref{def:sequence} is not met. 
+    %TODO include picture
+    Let $\varepsilon\coloneqq\frac{1}{2}$. Intuitively, if $x$ is within distance $\frac{1}{2}$ of $-1$, it cannot be within distance $\frac{1}{2}$ of $1$ (and vice-versa). Indeed, using the triangle inequality (part (c) of \Cref{prop:real-metric}):
+    \begin{equation}\label{eq:divseq1}
+        2=|1-(-1)| \leq |x-1|+|x-(-1)| 
+    \end{equation}
+    By assumption there is some $N$ such that $|x-x_n|\leq \frac{1}{2}$ for  $n\geq N$. In particular $|x-x_{2N}| = |x-1|\leq \frac{1}{2}$ and $|x-x_{2N+1}|=|x+1|\leq \frac{1}{2}$. But then, using \eqref{eq:divseq1}, we find that $2\leq \frac{1}{2}+\frac{1}{2}$, which is absurd. 
+\end{proof}
 In the previous example we arrived at a contradiction using $\varepsilon=\frac{1}{2}$, but any $\varepsilon$ such that $2\varepsilon < 2$ will work just fine. In many analysis proofs you will have to make arbitrary choices like this, but you'll eventually get the feel for it with some practice. 
 
+\subsection{Properties of Convergent Sequences}
+Now that we have some comfort with convergent sequences, we will prove a few properties.
 \begin{proposition} 
 \label{prop:conv-is-linear}
-    Let $x_n$, $y_n$ be convergent sequences and let $x=\lim x_n, y=\lim y_n$. Then:
+    Let $\{x_n\}$ and $\{y_n\}$ be convergent sequences and let $x=\lim x_n$ and $y=\lim y_n$. Then:
     \begin{listalph}
         \item For any real number $\lambda$, the sequence $\{\lambda x_n\}$ converges to $\lambda x$. 
         \item The sequence $\{x_n+y_n\}$ converges to $x+y$
         \item The sequence $\{x_ny_n\}$ converges to $xy$.
-        \item If $y_n, y\neq 0$, then $\{\frac{x_n}{y_n}\}$ converges to $\frac{x}{y}$. 
+        \item If $y\ne0$ and $y_n\ne0$ for all $n$, then $\big\{\frac{x_n}{y_n}\big\}$ converges to $\frac{x}{y}$. 
     \end{listalph}
 \end{proposition}
 \begin{proof}
-\begin{listalph}
-    \item Let $\varepsilon>0$. Since $x=\lim x_n$, there is $N_0$ such that $|x-x_n|\leq \varepsilon$ for all $n\geq N_0$. Notice that $|x-x_n|<\varepsilon$ if and only if $|\lambda x -\lambda x_n| < |\lambda|\varepsilon$, so we have not quite verified the definition of continuity. This is not a problem, as we can replace $\varepsilon$ with $\frac{\varepsilon}{|\lambda|}>0$ and find $N_1$ such that $|x-x_n|<\frac{\varepsilon}{|\lambda|}$ for $n\geq N_1$. From this it follows that $|\lambda x -\lambda x_n|<\varepsilon$ for $n\geq N$. Thus $\lambda x = \lim \lambda x_n$.
-    \item Let $\varepsilon>0$. Before we invoke the definitions of continuity for $\{x_n\}$ and $\{y_n\}$, let's first find an estimate for the distance from $x+y$ to $x_n+y_n$ in terms of $|x-x_n|$ and $|y-y_n|$. From the triangle inequality, we have that
-    \begin{flalign*}
-        \left|(x+y)-(x_n+y_n)\right| &=\left|(x-x_n)-(y_n-y)\right| \\
-        &\leq |x-x_n| + |y-y_n|
-    \end{flalign*}
-    So we will cleverly consider $\frac{\varepsilon}{2}$ and invoke the definitions of continuity to find $N, M$ such that $|x-x_n| < \frac{\varepsilon}{2}$ for $n\geq N$ and $|y-y_n| < \frac{\varepsilon}{2}$ for $n\geq M$. If we replace $N$ with $\max\{N, M\}$, then the above inequalities show that $\left|(x+y)-(x_n+y_n)\right|\leq \frac{\varepsilon}{2}+\frac{\varepsilon}{2} = \varepsilon$ for $n\geq N$, as desired. As in the proof of (a), we could've started with considering $\varepsilon>0$ and ended up with $2\varepsilon$, later changing back to $\frac{\varepsilon}{2}$. 
-    \item Let $\varepsilon>0$. As in (b). we'll find an estimate of $\left|xy-x_ny_n\right|$ in terms of our known sequences:
-    \begin{flalign*}
-        \left|xy-x_ny_n\right| &= \left|xy-x_ny+x_ny-x_ny_n\right| \\
-        &\leq \left|xy-x_ny\right|+\left|x_ny-x_ny_n\right| \\
-        &= |y||x-x_n| + |x_n||y-y_n|
-    \end{flalign*}
-    Combining the ideas behind (a) and (b), a good first guess would be to choose $N$ such that $|x-x_n|\leq \frac{\varepsilon}{2|y|}$ for $n\geq N$ and $M$ such that $|y-y_n|\leq \frac{\varepsilon}{2|x_n|}$. The problem is that $\frac{\varepsilon}{2|x_n|}$ itself depends on $n$, whereas the $\varepsilon>0$ in the definition of continuity does not depend on $n$. But, it suffices to find $\varepsilon_2$ and $M$ such that $|y-y_n| < \varepsilon_2$ for $n\geq M$ and $\varepsilon_2 < \frac{\varepsilon}{2|x_n|}$. To do this, first choose $M_1$ such that $|x_n-x|\leq 1$ for all $n\geq M_1$. If $|x_n-x|\leq 1$, then $|x_n| \leq |x| + |x_n-x| \leq |x|+1$. Choose $M_2$ such that $|y-y_n|\leq \varepsilon_2 = \frac{\varepsilon}{2(|x|+1)}$. Then, letting $M=\max\{M_1, M_2\}$, we have the desired relations. Putting everything together, for $n\geq N=\max\{N, M\}$, we have
-    \begin{flalign*}
-        \left|xy-x_ny_n\right| 
-        &= |y||x-x_n| + |x_n||y-y_n| \\
-        &\leq |y|\left(\frac{\varepsilon}{2|y|}\right) + (|x|+1)\left(\frac{\varepsilon}{2(|x|+1)}\right) \\
-        & = \frac{\varepsilon}{2}+\frac{\varepsilon}{2} \\
-        & =\varepsilon
-    \end{flalign*}
-    \item First, let's show that $\{\frac{1}{y_n}\}$ converges to $\frac{1}{y}$. Let $\varepsilon>0$. Then 
-    \begin{flalign*}
-        \left| \frac{1}{y_n}-\frac{1}{y} \right| &= \left|\frac{y_n}{y_ny}-\frac{y}{y_ny} \right| \\
-        &= \frac{|y-y_n|}{|y_n||y|}
-    \end{flalign*}
-    This will be similar to the last proof, except we now need a fixed $\varepsilon_2 >0$ such that $\varepsilon_2 \leq |y_n||y| \varepsilon$ for sufficiently large $n$. Notice that this is only possible if $y\neq 0$. Let $\delta = \frac{|y|}{2} >0$ and use the fact that $\lim(y_n) =y$ to find $M_1$ such that $|y-y_n| \leq \delta \frac{|y|}{2}$ for $n\geq M_1$. Using the triangle inequality, we find that
-    \[ |y| \leq |y_n| + |y-y_n|  \leq |y_n| + \frac{|y|}{2} \]
-    Subtracting $\frac{|y|}{2}$ from both sides shows that $|y_n|\geq \frac{|y|}{2}$ for all $n\geq M_1$. Let $M_2$ be such that $|y-y_n|\leq \frac{\varepsilon|y|^2}{2}$ for $n\geq M_2$. Then, for $n\geq N = \max\{M_1, M_2\}$, we have 
-    \begin{flalign*}
-        \left| \frac{1}{y_n}-\frac{1}{y} \right| &= \frac{|y-y_n|}{|y_n||y|} \\
-        &\leq \frac{\varepsilon|y|^2}{2|y_n||y|} \\
-        &\leq \frac{\varepsilon |y_n||y|}{|y_n||y|} \\
-        &= \varepsilon
-    \end{flalign*}
-    as desired. We finish by applying part (c) to the sequences $\{x_n\}$ and $\{\frac{1}{y_n}\}$. 
-\end{listalph}
+    We show the parts one at a time.
+    \begin{listalph}
+        \item Let $\varepsilon>0$. Since $x=\lim x_n$, there is $N_0$ such that $|x-x_n|\leq \varepsilon$ for all $n\geq N_0$. Notice that $|x-x_n|<\varepsilon$ if and only if $|\lambda x -\lambda x_n| < |\lambda|\varepsilon$, so we have not quite verified the definition of continuity. This is not a problem, as we can replace $\varepsilon$ with $\frac{\varepsilon}{|\lambda|}>0$ and find $N_1$ such that $|x-x_n|<\frac{\varepsilon}{|\lambda|}$ for $n\geq N_1$. From this it follows that $|\lambda x -\lambda x_n|<\varepsilon$ for $n\geq N$. Thus $\lambda x = \lim \lambda x_n$.
+        \item Let $\varepsilon>0$. Before we invoke the definitions of continuity for $\{x_n\}$ and $\{y_n\}$, let's first find an estimate for the distance from $x+y$ to $x_n+y_n$ in terms of $|x-x_n|$ and $|y-y_n|$. From the triangle inequality, we have that
+        \begin{flalign*}
+            \left|(x+y)-(x_n+y_n)\right| &=\left|(x-x_n)-(y_n-y)\right|\leq |x-x_n| + |y-y_n|.
+        \end{flalign*}
+        So we will cleverly consider $\frac{\varepsilon}{2}$ and invoke the definitions of continuity to find $N, M$ such that $|x-x_n| < \frac{\varepsilon}{2}$ for $n\geq N$ and $|y-y_n| < \frac{\varepsilon}{2}$ for $n\geq M$. If we replace $N$ with $\max\{N, M\}$, then the above inequalities show that $\left|(x+y)-(x_n+y_n)\right|\leq \frac{\varepsilon}{2}+\frac{\varepsilon}{2} = \varepsilon$ for $n\geq N$, as desired. As in the proof of (a), we could've started with considering $\varepsilon>0$ and ended up with $2\varepsilon$, later changing back to $\frac{\varepsilon}{2}$. 
+        \item Let $\varepsilon>0$. As in (b). we'll find an estimate of $\left|xy-x_ny_n\right|$ in terms of our known sequences, writing
+        \begin{flalign*}
+            \left|xy-x_ny_n\right| &= \left|xy-x_ny+x_ny-x_ny_n\right| \\
+            &\leq \left|xy-x_ny\right|+\left|x_ny-x_ny_n\right| \\
+            &= |y||x-x_n| + |x_n||y-y_n|.
+        \end{flalign*}
+        Combining the ideas behind (a) and (b), a good first guess would be to choose $N$ such that $|x-x_n|\leq \frac{\varepsilon}{2|y|}$ for $n\geq N$ and $M$ such that $|y-y_n|\leq \frac{\varepsilon}{2|x_n|}$. The problem is that $\frac{\varepsilon}{2|x_n|}$ itself depends on $n$, whereas the $\varepsilon>0$ in the definition of continuity does not depend on $n$.
+        
+        However, it suffices to find $\varepsilon_2$ and $M$ such that $|y-y_n| < \varepsilon_2$ for $n\geq M$ and $\varepsilon_2 < \frac{\varepsilon}{2|x_n|}$. To do this, first choose $M_1$ such that $|x_n-x|\leq 1$ for all $n\geq M_1$. If $|x_n-x|\leq 1$, then $|x_n| \leq |x| + |x_n-x| \leq |x|+1$. Choose $M_2$ such that $|y-y_n|\leq \varepsilon_2 = \frac{\varepsilon}{2(|x|+1)}$ for $n\ge M_2$. Then, letting $M\coloneqq\max\{M_1, M_2\}$, we have the desired relations. Putting everything together, for $n\geq\max\{N, M\}$, we have
+        \begin{flalign*}
+            \left|xy-x_ny_n\right| 
+            &= |y||x-x_n| + |x_n||y-y_n| \\
+            &\leq |y|\left(\frac{\varepsilon}{2|y|}\right) + (|x|+1)\left(\frac{\varepsilon}{2(|x|+1)}\right) \\
+            & = \frac{\varepsilon}{2}+\frac{\varepsilon}{2} \\
+            & =\varepsilon.
+        \end{flalign*}
+        \item First, let's show that $\big\{\frac{1}{y_n}\big\}$ converges to $\frac{1}{y}$. Let $\varepsilon>0$. Then 
+        \begin{flalign*}
+            \left| \frac{1}{y_n}-\frac{1}{y} \right| &= \left|\frac{y_n}{y_ny}-\frac{y}{y_ny} \right|
+            = \frac{|y-y_n|}{|y_n|\cdot|y|}
+        \end{flalign*}
+        This will be similar to the last proof, except we now need a fixed $\varepsilon_2 >0$ such that $\varepsilon_2 \leq |y_n|\cdot|y| \varepsilon$ for sufficiently large $n$. Notice that this is only possible if $y\neq 0$. Let $\delta \coloneqq \frac{|y|}{2} >0$ and use the fact that $\lim y_n =y$ to find $M_1$ such that $|y-y_n| \leq \delta\cdot\frac{|y|}{2}$ for $n\geq M_1$. Using the triangle inequality, we find that
+        \[ |y| \leq |y_n| + |y-y_n|  \leq |y_n| + \frac{|y|}{2} \]
+        Subtracting $\frac{|y|}{2}$ from both sides shows that $|y_n|\geq \frac{|y|}{2}$ for all $n\geq M_1$. Let $M_2$ be such that $|y-y_n|\leq \frac{\varepsilon|y|^2}{2}$ for $n\geq M_2$. Then, for $n\geq N \coloneqq\max\{M_1, M_2\}$, we have 
+        \begin{flalign*}
+            \left| \frac{1}{y_n}-\frac{1}{y} \right| &= \frac{|y-y_n|}{|y_n|\cdot|y|} \\
+            &\leq \frac{\varepsilon|y|^2}{2|y_n|\cdot|y|} \\
+            &\leq \frac{\varepsilon |y_n|\cdot|y|}{|y_n|\cdot|y|} \\
+            &= \varepsilon
+        \end{flalign*}
+        as desired. We finish by applying part (c) to the sequences $\{x_n\}$ and $\{\frac{1}{y_n}\}$.
+        \qedhere
+    \end{listalph}
 \end{proof}
 
 
 
-In the proof of part (c) of \Cref{prop:conv-is-linear}, we showed that $|x_n| < |x|+1$ for sufficiently large $n$. This property ends up being very useful:
+In the proof of part (c) of \Cref{prop:conv-is-linear}, we showed that $|x_n| < |x|+1$ for sufficiently large $n$. This property ends up being very useful.
 
-\begin{definition}
+\begin{definition}[bounded sequence]
     Let $\{x_n\}$ be a sequence of real numbers. If there is $M\geq 0$ such that $|x_n|\leq M$ for all $n$, then $\{x_n\}$ is a \dfn{bounded} sequence. More generally, a susbset $S\subset \RR$ is called \dfn{bounded} if there is $M$ such that $S\subset \{x\in \RR : |x|\leq M\}$. So a sequence is bounded if and only if the set of its elements is bounded. 
 \end{definition}
 
@@ -176,13 +182,28 @@ In the proof of part (c) of \Cref{prop:conv-is-linear}, we showed that $|x_n| < 
     If $\{x_n\}$ is a convergent sequence, then $\{x_n\}$ is bounded.
 \end{proposition}
 \begin{proof}
-    The proof is every similar to what we did in part (c) of \Cref{prop:conv-is-linear}. Let $x=\lim(x_n)$, and let $N\in \NN$ such that $|x_n-x|\leq 1$. for $n\geq N$. Then, using the triangle inequality, $|x_n| \leq |x| + |x_n-x| \leq |x|+1$ for $n\geq N$. Now set $M=\max\{|x|+1, |x_1|, |x_2|, \dots, |x_N|\}$, which exists because we are taking the maximum of a finite set. If $n\leq N$, then $|x_n|\leq M$ by definition. If $n\geq N$, then $|x_n|\leq |x|+1 \leq M$. So $|x_n|\leq M$ for all $n$, which shows that $\{x_n\}$ is a bounded sequence.  
+    The proof is every similar to what we did in part (c) of \Cref{prop:conv-is-linear}. Let $x\coloneqq\lim x_n$, and let $N\in \NN$ such that $|x_n-x|\leq 1$ for $n\geq N$. Then, using the triangle inequality,
+    \[|x_n| \leq |x| + |x_n-x| \leq |x|+1\]
+    for $n\geq N$. Now set $M\coloneqq\max\{|x|+1, |x_1|, |x_2|, \dots, |x_N|\}$, which exists because we are taking the maximum of a finite set. If $n\leq N$, then $|x_n|\leq M$ by definition. If $n\geq N$, then $|x_n|\leq |x|+1 \leq M$. So $|x_n|\leq M$ for all $n$, which shows that $\{x_n\}$ is a bounded sequence.  
+\end{proof}
+The following result also provides some form of a converse for \Cref{prop:conv-impy-bded}.
+\begin{proposition} \label{prop:bound-seq-is-bound-limit}
+    Let $\{x_n\}$ be a convergent sequence. Suppose there are real numbers $a,b\in\RR$ such that $a\le x_n\le b$ for all $n$. Then $a\le\lim x_n\le b$.
+\end{proposition}
+\begin{proof}
+    For brevity, set $x\coloneqq\lim x_n$. The point is that $x$ is very close to $x_n$ for large $n$, so the inequality on $x_n$ should translate to an inequality on $x$. Now, for any $\varepsilon>0$, we may find $N$ such that $\left|x-x_n\right|<\varepsilon$ for any $n>N$, implying
+    \begin{equation}
+        a-\varepsilon\le x_n-\varepsilon<x<x_n+\varepsilon<b+\varepsilon \label{eq:baby-squeeze-ineq}
+    \end{equation}
+    for any $n>N$.
+
+    We are now ready to conclude. Suppose for the sake of contradiction that $x>b$. Then we could set $\varepsilon\coloneqq x-b>0$ to find that $x\ge b+\varepsilon$, contradicting \eqref{eq:baby-squeeze-ineq}. Similarly, suppose for the sake of contradiction that $x<a$. Then we could set $\varepsilon\coloneqq a-x$ to find that $x\le a-\varepsilon$, again contradicting \eqref{eq:baby-squeeze-ineq}. This completes the proof.
 \end{proof}
 
-Your calculus class likely discussed series along with sequences. Although we won't focus on series, we've developed enough ideas to precisely define them, and they will be important in Math 104:
+Your calculus class likely discussed series along with sequences. Although we won't focus on series, we've developed enough ideas to precisely define them, and they will be important in Math 104.
 
-\begin{definition}
-    Let $\{a_n\}$ be a sequence of real numbers. Then the \dfn{series} $\sum_{n=1}^\infty a_n$ refers to the sequence $\{s_k\}$, where $s_k=\sum_{n=1}^k$ is the $k$th partial sum. We say that the series $\sum a_n$ \dfn{converges} when the sequence of partial sums $\{s_k\}$ converges. 
+\begin{definition}[series]
+    Let $\{a_n\}$ be a sequence of real numbers. Then the \dfn{series} $\sum_{n=1}^\infty a_n$ refers to the sequence $\{s_k\}$, where $s_k\coloneqq\sum_{n=1}^k$ is the $k$th partial sum. We say that the series $\sum a_n$ \dfn{converges} when the sequence of partial sums $\{s_k\}$ converges.
 \end{definition}
 
 %TODO make this a series of exercises
@@ -192,61 +213,60 @@ Your calculus class likely discussed series along with sequences. Although we wo
 \end{proposition}
 \begin{proof}
     We need to show that the sequence of partial sums converges, so let's find a closed formula $s_k  = \sum_{n=0}^k \alpha^n$. The trick is to notice that for $k > 0$:
-    \begin{flalign*}
-        s_{k+1}-1 &= \sum_{n=1}^{k+1} \alpha^n \\
-        &= \alpha \sum_{n=0}^{k} s_k \\
-        &= \alpha s_k
-    \end{flalign*}
+    \[s_{k+1}-1 = \sum_{n=1}^{k+1} \alpha^n 
+        = \alpha \sum_{n=0}^{k} s_k 
+        = \alpha s_k.\]
     And therefore 
-    \begin{flalign*}
-        \alpha^{k+1} &= s_{k+1} -s_k \\
-        &= \alpha s_k +1 - s_k \\
-    \end{flalign*}
+    \[\alpha^{k+1} = s_{k+1} -s_k = \alpha s_k +1 - s_k, \]
     which gives us a formula you may have seen in your calculus class: 
-    \[ s_k = \frac{\alpha^{k+1}-1}{\alpha -1}\]
+    \[ s_k = \frac{\alpha^{k+1}-1}{\alpha -1}.\]
     Now we just have to show that 
-    \[ \lim_{k\to \infty}\frac{ \alpha^{k+1}-1}{\alpha -1} = \frac{1}{1-\alpha}\]
+    \[ \lim_{k\to \infty}\frac{ \alpha^{k+1}-1}{\alpha -1} \stackrel?= \frac{1}{1-\alpha}\]
     Because of \Cref{prop:conv-is-linear}, it is enough to prove that 
-    \[ \lim_{n\to \infty } \alpha ^n =0\]
-    Let $\varepsilon>0$. We'd like to show that $\alpha^n < \varepsilon$ for large enough $n$. It turns out to be much easier to show that $\left(\frac{1}{\alpha}\right)^n$ is greater than $\varepsilon$. Let $\beta=\frac{1}{\alpha} > 1$. We can use the binomial theorem to expand $\beta=1+(\beta-1)$:
+    \[ \lim_{n\to \infty } \alpha ^n \stackrel?=0.\]
+    This is surprisingly technical. Let $\varepsilon>0$. We'd like to show that $\alpha^n < \varepsilon$ for large enough $n$. It turns out to be much easier to show that $\left(\frac{1}{\alpha}\right)^n$ is greater than $\varepsilon$. Let $\beta\coloneqq\frac{1}{\alpha} > 1$. We can use the binomial theorem to expand $\beta=1+(\beta-1)$ as
     \begin{flalign*}
         \beta^n &= (1+(\beta-1))^n \\
         &= 1 + n(\beta-1) + \binom{n}{2}(\beta-1)^2 + \dots + (\beta-1)^n
     \end{flalign*}
-    Since $\beta-1 >0$, we have $\beta^n \geq 1+n(\beta-1)$. Choose $N$ such that $1+n(\beta-1) > \frac{1}{\varepsilon}$ for $n\geq N$. Then $\beta^n > \frac{1}{\varepsilon}$, or $\alpha^n < \varepsilon$, for all $n\geq N$. Thus $\lim_{n\to\infty \alpha^n} = 0$, and therefore
+    Since $\beta-1 >0$, we have $\beta^n \geq 1+n(\beta-1)$. Choose $N$ such that $1+n(\beta-1) > \frac{1}{\varepsilon}$ for $n\geq N$. Then $\beta^n > \frac{1}{\varepsilon}$, or $\alpha^n < \varepsilon$, for all $n\geq N$. Thus, $\lim_{n\to\infty \alpha^n} = 0$.
+    
+    Bringing everything together, we find
     \begin{flalign*}
         \sum_{n=0}^\infty \alpha^n &= \lim_{k\to \infty} \sum_{n=0}^k \alpha^n \\
         &= \lim_{k\to \infty}\frac{ \alpha^{k+1}-1}{\alpha -1} \\
         &= \frac{\lim_{k\to \infty}\alpha^{k+1}-1}{\alpha-1} \\
-        &= \frac{1}{1-\alpha}
+        &= \frac{1}{1-\alpha},
     \end{flalign*}
+    which is what we wanted.
 \end{proof}
 
 \subsection{Problems}
 %This is similar to the 6th problem part (a), remove it? 
 \begin{homework}
-    Let $x_n=n$ for $n\in \NN$. Show that $\{x_n\}$ does not converge without using \Cref{prop:conv-impy-bded}. 
+    Let $x_n\coloneqq n$ for $n\in \NN$. Show that $\{x_n\}$ does not converge directly, without using \Cref{prop:conv-impy-bded}. 
 \end{homework}
 \begin{homework}
-    Give an example of convergent sequences $\{x_n\}$, $\{y_n\}$ such that $y_n\neq 0$ but $\left\{ \frac{x_n}{y_n} \right\}$ does not converge.
+    Give an example of convergent sequences $\{x_n\}$ and $\{y_n\}$ such that $y_n\neq 0$ for all $n$ while the sequence $\big\{ \frac{x_n}{y_n} \big\}$ does not converge.
 \end{homework}
 \begin{homework}
-    Let $a>0$ and define $x_n=\sqrt[n]{a}$. Show that $\lim_{n\to \infty}x_n = 1$.\footnote{Hint: expand (1-a) using the binomial theorem} 
+    Let $a>0$ and define $x_n\coloneqq\sqrt[n]{a}$. Show that $\lim_{n\to \infty}x_n = 1$. (Hint: expand $(1-a)$ using the binomial theorem.) 
 \end{homework}
 \begin{homework}
-\textbf{Changing finitely many terms of a sequence does not change its connergence: }Let $\{x_n\}$ and $\{x_n'\}$ be sequences such that $x_n' = x_n$ for all but finitely many $n$. Show that $\lim x_n = a$ if and only if $\lim x_n'=a$.
-\end{homework}
-\begin{homework} \textbf{"Shifting" a sequence does not change its convergence: }
-\begin{listalph}
-    \item Let $\{x_n\}$ be a sequence and $r$ a natural number. Let $y_n = x_{n+r}$ for $n\geq 0$, so that $\{y_n\}$ is the sequence $\{x_n\}$ shifted left by $r$ places. Show that $\lim x_n=a$ if and only if $\lim y_n=a$.
-    \item  Let $z_n=x_{n-r}$ for $n\geq r+1$ and $0$ otherwise, so that $\{z_n\}$ is $\{x_n\}$ shifted right by $r$ places. Show that $\lim x_n=a$ if and only if $\lim z_n=a$.
-\end{listalph}
+    We show that changing finitely many terms of a sequence does not change its convergence. Let $\{x_n\}$ and $\{x_n'\}$ be sequences such that $x_n' = x_n$ for all but finitely many $n$. For a real number $a$, show that $\lim x_n = a$ if and only if $\lim x_n'=a$.
 \end{homework}
 \begin{homework}
-    Let $\{x_n\}$ be a sequence. If $n_k : k\in \NN$ is a strictly increasing sequence of positive naturals, we call the sequence $\{x_{n_k}\}_{k\in \NN}$ a \dfn{subsequence} of $\{x_n\}$. For example, $n_k = 2k+1$ and $\{x_{n_k}\}=\{x_1, x_3, x_5, \dots\}$ is the subsequence of odd-indexed elements. 
+    We show that ``Shifting" a sequence does not change its convergence.
     \begin{listalph}
-        \item Suppose $\lim_{n\to \infty} x_n =a$. Show that $\lim_{k\to\infty}x_{n_k}=a$ for all subsequences $\{x_{n_k}\}$ of $\{x_n\}$. 
-        \item Give an example of a sequence $\{x_n\}$ and a subsequence $\{x_{n_k}\}$ such that $\{x_{n_k}\}$ converges but $\{x_n\}$ does not. 
+        \item Let $\{x_n\}$ be a sequence and $r$ a natural number. Let $y_n \coloneqq x_{n+r}$ for $n\geq 0$, so that $\{y_n\}$ is the sequence $\{x_n\}$ shifted left by $r$ places. For a real number $a$, show that $\lim x_n=a$ if and only if $\lim y_n=a$.
+        \item  Let $z_n\coloneqq x_{n-r}$ for $n\geq r+1$ and $0$ otherwise, so that $\{z_n\}$ is $\{x_n\}$ shifted right by $r$ places. For a real number $a$, show that $\lim x_n=a$ if and only if $\lim z_n=a$.
+    \end{listalph}
+\end{homework}
+\begin{homework}
+    Let $\{x_n\}$ be a sequence. If $\{n_k\}_{k\in\NN}$ is a strictly increasing sequence of positive naturals, we call the sequence $\{x_{n_k}\}_{k\in \NN}$ a \dfn{subsequence} of $\{x_n\}$. For example, with $n_k \coloneqq 2k+1$, we see $\{x_{n_k}\}=\{x_1, x_3, x_5, \dots\}$ is the subsequence of odd-indexed elements. 
+    \begin{listalph}
+        \item Suppose $\lim_{n\to \infty} x_n =a$ for some real number $a$. Show that $\lim_{k\to\infty}x_{n_k}=a$ for all subsequences $\{x_{n_k}\}$ of $\{x_n\}$. 
+        \item Give an example of a sequence $\{x_n\}$ and a subsequence $\{x_{n_k}\}$ such that $\{x_{n_k}\}$ converges but $\{x_n\}$ does not.
     \end{listalph}
 \end{homework}
 \begin{homework}
@@ -254,10 +274,10 @@ Your calculus class likely discussed series along with sequences. Although we wo
     \begin{listalph}
         \item Show that $\{x_n\}$ does not converge. 
         \item Show $x_n\neq0$ for all but finitely many $n$.  
-        \item Let $y_n=\frac{1}{x_n}$ if $x_n\neq 0$ and $0$ otherwise. Show that $\lim_{n\to\infty }y_n=0$. 
+        \item Let $y_n\coloneqq\frac{1}{x_n}$ if $x_n\neq 0$ and $y_n\coloneqq 0$ otherwise. Show that $\lim_{n\to\infty }y_n=0$.
     \end{listalph}
 \end{homework}
 \begin{homework}
-    Let $a_n$ be a sequence such that its associated series $\sum_{n=0}^\infty a_n$ converges. Show that $\lim_{n\to \infty}a_n =0$. 
+    Let $\{a_n\}$ be a sequence such that its associated series $\sum_{n=0}^\infty a_n$ converges. Show that $\lim a_n =0$.
 \end{homework}
 \end{document}
