@@ -141,13 +141,13 @@ Now that we have some comfort with convergent sequences, we will prove a few pro
             &\leq \left|xy-x_ny\right|+\left|x_ny-x_ny_n\right| \\
             &= |y||x-x_n| + |x_n||y-y_n|.
         \end{flalign*}
-        Combining the ideas behind (a) and (b), a good first guess would be to choose $N$ such that $|x-x_n|\leq \frac{\varepsilon}{2|y|}$ for $n\geq N$ and $M$ such that $|y-y_n|\leq \frac{\varepsilon}{2|x_n|}$. The problem is that $\frac{\varepsilon}{2|x_n|}$ itself depends on $n$, whereas the $\varepsilon>0$ in the definition of continuity does not depend on $n$.
+        Combining the ideas behind (a) and (b), a good first guess would be to choose $N$ such that $|x-x_n|\leq \frac{\varepsilon}{2|y|}$ for $n\geq N$ and $M$ such that $|y-y_n|\leq \frac{\varepsilon}{2|x_n|}$. One problem is that $y, x_n$ may be zero. A more serious problem is that $\frac{\varepsilon}{2|x_n|}$ itself depends on $n$, whereas the $\varepsilon>0$ in the limit definition does not depend on $n$.
         
-        However, it suffices to find $\varepsilon_2$ and $M$ such that $|y-y_n| < \varepsilon_2$ for $n\geq M$ and $\varepsilon_2 < \frac{\varepsilon}{2|x_n|}$. To do this, first choose $M_1$ such that $|x_n-x|\leq 1$ for all $n\geq M_1$. If $|x_n-x|\leq 1$, then $|x_n| \leq |x| + |x_n-x| \leq |x|+1$. Choose $M_2$ such that $|y-y_n|\leq \varepsilon_2 = \frac{\varepsilon}{2(|x|+1)}$ for $n\ge M_2$. Then, letting $M\coloneqq\max\{M_1, M_2\}$, we have the desired relations. Putting everything together, for $n\geq\max\{N, M\}$, we have
+        However, it suffices to find $\varepsilon_2$ and $M$ such that $|y-y_n| < \varepsilon_2$ for $n\geq M$ and $\varepsilon_2 < \frac{\varepsilon}{2(|x_n|+1)}$. To do this, first choose $M_1$ such that $|x_n-x|\leq 1$ for all $n\geq M_1$. If $|x_n-x|\leq 1$, then $|x_n| \leq |x| + |x_n-x| \leq |x|+1$. Choose $M_2$ such that $|y-y_n|\leq \varepsilon_2 = \frac{\varepsilon}{2(|x|+1)}$ for $n\ge M_2$. Then, letting $M\coloneqq\max\{M_1, M_2\}$, we have the desired relations. Putting everything together, for $n\geq\max\{N, M\}$, we have
         \begin{flalign*}
             \left|xy-x_ny_n\right| 
             &= |y||x-x_n| + |x_n||y-y_n| \\
-            &\leq |y|\left(\frac{\varepsilon}{2|y|}\right) + (|x|+1)\left(\frac{\varepsilon}{2(|x|+1)}\right) \\
+            &\leq (|y|+1)\left(\frac{\varepsilon}{2(|y|+1)}\right) + (|x|+1)\left(\frac{\varepsilon}{2(|x|+1)}\right) \\
             & = \frac{\varepsilon}{2}+\frac{\varepsilon}{2} \\
             & =\varepsilon.
         \end{flalign*}
@@ -175,7 +175,7 @@ Now that we have some comfort with convergent sequences, we will prove a few pro
 In the proof of part (c) of \Cref{prop:conv-is-linear}, we showed that $|x_n| < |x|+1$ for sufficiently large $n$. This property ends up being very useful.
 
 \begin{definition}[bounded sequence]
-    Let $\{x_n\}$ be a sequence of real numbers. If there is $M\geq 0$ such that $|x_n|\leq M$ for all $n$, then $\{x_n\}$ is a \dfn{bounded} sequence. More generally, a susbset $S\subset \RR$ is called \dfn{bounded} if there is $M$ such that $S\subset \{x\in \RR : |x|\leq M\}$. So a sequence is bounded if and only if the set of its elements is bounded. 
+    Let $\{x_n\}$ be a sequence of real numbers. If there is $M\geq 0$ such that $|x_n|\leq M$ for all $n$, then $\{x_n\}$ is a \dfn{bounded} sequence. More generally, a subset $S\subset \RR$ is called \dfn{bounded} if there is $M$ such that $S\subset \{x\in \RR : |x|\leq M\}$. So a sequence is bounded if and only if the set of its elements is bounded. 
 \end{definition}
 
 \begin{proposition} \label{prop:conv-impy-bded}
@@ -250,7 +250,7 @@ Your calculus class likely discussed series along with sequences. Although we wo
     Give an example of convergent sequences $\{x_n\}$ and $\{y_n\}$ such that $y_n\neq 0$ for all $n$ while the sequence $\big\{ \frac{x_n}{y_n} \big\}$ does not converge.
 \end{homework}
 \begin{homework}
-    Let $a>0$ and define $x_n\coloneqq\sqrt[n]{a}$. Show that $\lim_{n\to \infty}x_n = 1$. (Hint: expand $(1-a)$ using the binomial theorem.) 
+    Let $a>0$ and define $x_n\coloneqq a^\frac{1}{n}$. Show that $\lim_{n\to \infty}x_n = 1$ (Hint: expand $(1-a)=(1-a^{\frac{1}{n}}$)(1+a^\frac{1}{n}+a^\frac{2}{n}+\dots + a^\frac{n-1}{n}).  
 \end{homework}
 \begin{homework}
     We show that changing finitely many terms of a sequence does not change its convergence. Let $\{x_n\}$ and $\{x_n'\}$ be sequences such that $x_n' = x_n$ for all but finitely many $n$. For a real number $a$, show that $\lim x_n = a$ if and only if $\lim x_n'=a$.
